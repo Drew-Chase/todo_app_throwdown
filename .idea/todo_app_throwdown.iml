@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/crates/iced/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/shared/examples" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/shared/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/tauri/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
