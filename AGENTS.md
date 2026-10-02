@@ -142,3 +142,4 @@ Examples of what to record:
 - Build verification: 
 px tsc --noEmit and 
 pm run build in crates/tauri (tsc + vite, ~1.4s). npm prints a harmless "public-hoist-pattern" warning.
+- Tauri backend (crates/tauri/src-tauri, tauri 2.12.1 / tauri-macros 2.7.1): `#[command]` on `pub` fns defined in the crate ROOT (lib.rs) triggers E0255 (`__cmd__X` defined multiple times) — tauri-macros wrapper.rs emits `#[macro_export]` + `pub use` which collide at crate root. Fix: keep commands in a submodule (pattern already used by `log` in util/logging.rs). Also: command error types must implement Serialize (eyre::Report/color_eyre::Result cannot cross IPC) — shared crate's `TodoAppError` (crates/shared/src/lib.rs) is the intended error enum but lacks `serde::Serialize` derive. Commands in a submodule + serializable error = clean clippy (validated 2026-10-02 via temp repro).
