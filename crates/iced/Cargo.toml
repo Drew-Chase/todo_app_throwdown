@@ -3,5 +3,18 @@ name = "iced_todo_app"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+name = "iced_todo_app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+path = "./src/lib.rs"
+
 [dependencies]
 todo_commonlib = { path = "../shared" }
+iced = { version = "0.14", default-features = false, features = ["canvas", "advanced", "svg", "lazy", "sipper", "advanced-shaping", "web-colors", "crisp", "tiny-skia", "thread-pool", "x11", "wayland"] }
+
+color-eyre = { workspace = true }
+tracing = { workspace = true }
+
+[build-dependencies]
+chrono = "0.4.45"
+walkdir = "2.5.0"
