@@ -131,3 +131,14 @@ Examples of what to record:
 - Performance-critical hot paths and their constraints
 - Shared state and synchronization mechanisms
 - Build configuration and feature flag relationships
+
+## Agent Memory (project notes)
+
+- Frontend lives in crates/tauri/src; React 19 + react-router, no app-level state library.
+- HeroUI v3.2.1: compound components via namespaced exports (Card.Header, Checkbox.Content, Chip.Label); cn/	v re-exported from @heroui/react. Component CSS is in cascade layers (components/theme), so Tailwind utility overrides always win. Base component classes: .checkbox__control, .card (radius min(32px, --radius-3xl)), .input etc. Variants: Button {danger, danger-soft, ghost, outline, primary, secondary, tertiary}, Card {default, secondary, tertiary, transparent}, Chip color {accent, danger, default, success, warning}.
+- HeroUI semantic color tokens exist as Tailwind colors: surface, surface-secondary, foreground, muted, accent, accent-soft, danger-soft, field-placeholder, etc.
+- crates/tauri/src/css/index.css: @theme exposes Material You tokens I added — shadow-elevation-1/2/3, ase-material (cubic-bezier(0.2,0,0,1)), ounded-material (28px). Roboto is the global font; brand accent is #f13848 (red), do not change globally.
+- Todo UI (2026-10): components in src/components/todo/ (TodoCheckbox round accent checkbox, TodoItem hover-reveal delete, TodoComposer title+description card w/ Enter submit, TodoList w/ EmptyState, TodoHeader count chip), barrel index.ts, type in src/types/todo.ts. Home.tsx holds LOCAL useState as placeholder — user will hook backend (Tauri commands) later via the onAdd/onToggle/onDelete props.
+- Build verification: 
+px tsc --noEmit and 
+pm run build in crates/tauri (tsc + vite, ~1.4s). npm prints a harmless "public-hoist-pattern" warning.
