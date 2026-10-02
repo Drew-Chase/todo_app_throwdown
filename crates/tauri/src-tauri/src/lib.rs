@@ -1,6 +1,7 @@
-use tracing::{ info};
+use tracing::info;
 use util::logging::log;
 
+mod commands;
 mod util;
 
 pub static DEBUG: bool = cfg!(debug_assertions);
@@ -40,7 +41,15 @@ pub fn run() {
 
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
-        .invoke_handler(tauri::generate_handler![ log])
+        .invoke_handler(tauri::generate_handler![
+            log,
+            commands::initialize,
+            commands::get_list,
+            commands::insert_item,
+            commands::mark_item_as_done,
+            commands::mark_item_as_undone,
+            commands::delete_item
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
