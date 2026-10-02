@@ -1,6 +1,4 @@
-
 import {Button, ButtonGroup} from "@heroui/react";
-import {ThemeSwitchComponent} from "../../providers/ThemeProvider.tsx";
 import {getCurrentWindow} from "@tauri-apps/api/window";
 import {Icon} from "@iconify-icon/react";
 
@@ -32,8 +30,8 @@ export default function WindowChrome()
     return (
         <div
             className={
-                "flex flex-row h-[2.5rem] backdrop-blur-sm sticky top-0 w-full z-[51] backdrop-saturate-150 select-none"
-                + (IS_MACOS ? " pl-[80px]" : "")
+                "flex flex-row h-8 backdrop-blur-sm sticky top-0 w-full z-51 backdrop-saturate-150 select-none bg-gray-100"
+                + (IS_MACOS ? " pl-20" : "")
             }
             data-tauri-drag-region=""
         >
@@ -41,13 +39,12 @@ export default function WindowChrome()
                 <p className={"mx-2 mt-1 text-lg font-bold select-none"} data-tauri-drag-region="">Tauri Todo App</p>
             </div>
             <div className={"flex flex-row ml-auto"}>
-                <ButtonGroup className={"h-[2rem]"} variant={"tertiary"}>
-                    <ThemeSwitchComponent/>
+                <ButtonGroup className={"h-8"} variant={"tertiary"}>
                     {!HAS_NATIVE_CHROME && (
                         <>
-                            <Button variant={"tertiary"} className={"min-w-0 h-[2rem] rounded-sm text-[1rem]"} onPress={() => appWindow.minimize()}><Icon icon="material-symbols:minimize-rounded"/></Button>
-                            <Button variant={"tertiary"} className={"min-w-0 h-[2rem] rounded-sm text-[.7rem]"} onPress={() => appWindow.toggleMaximize()}><Icon icon="material-symbols:square-outline-rounded"/></Button>
-                            <Button variant={"danger-soft"} className={"min-w-0 h-[2rem] rounded-sm text-[1rem]"} onPress={() => appWindow.close()}><Icon icon="material-symbols:close-rounded"/></Button>
+                            <Button key={"application-minimize-window-button"} variant={"tertiary"} className={"min-w-0 h-8 rounded-none text-[1rem] bg-transparent hover:bg-gray-200"} onPress={() => appWindow.minimize()}><Icon icon="material-symbols:minimize-rounded"/></Button>
+                            <Button key={"application-maximize-window-button"} variant={"tertiary"} className={"min-w-0 h-8 rounded-none text-[.7rem] bg-transparent hover:bg-gray-200"} onPress={() => appWindow.toggleMaximize()}><Icon icon="material-symbols:square-outline-rounded"/></Button>
+                            <Button key={"application-close-window-button"} variant={"danger-soft"} className={"min-w-0 h-8 rounded-none text-[1rem] bg-transparent hover:bg-danger hover:text-white"} onPress={() => appWindow.close()}><Icon icon="material-symbols:close-rounded"/></Button>
                         </>
                     )}
                 </ButtonGroup>
