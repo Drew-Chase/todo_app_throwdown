@@ -1,13 +1,13 @@
-import type {Todo} from "../../types/todo";
 import {EmptyState} from "@heroui/react";
 import {Icon} from "@iconify-icon/react";
 import TodoItem from "./TodoItem.tsx";
+import {TodoItem as TodoItemType} from "../../providers/TodoProvider.tsx";
 
 interface TodoListProps
 {
-    todos: Todo[];
-    onToggle: (id: string, checked: boolean) => void;
-    onDelete: (id: string) => void;
+    todos: TodoItemType[];
+    onToggle: (id: number, checked: boolean) => void;
+    onDelete: (id: number) => void;
 }
 
 // Ordered stack of todo cards with a friendly empty state when there is

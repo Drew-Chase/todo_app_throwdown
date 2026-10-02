@@ -6,6 +6,7 @@ import "./css/index.css";
 import AppShell from "./components/shell/AppShell.tsx";
 import Home from "./pages/Home.tsx";
 import {attachConsoleToTracing} from "./util/logger.ts";
+import {TodoProvider} from "./providers/TodoProvider.tsx";
 
 // Route all console output and uncaught errors through the Rust tracing
 // pipeline so frontend logs land in the same rolling log files as native logs.
@@ -18,11 +19,13 @@ document.addEventListener("contextmenu", e => e.preventDefault());
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <BrowserRouter>
-            <Routes>
-                <Route element={<AppShell/>}>
-                    <Route path="/" element={<Home/>}/>
-                </Route>
-            </Routes>
+            <TodoProvider>
+                <Routes>
+                    <Route element={<AppShell/>}>
+                        <Route path="/" element={<Home/>}/>
+                    </Route>
+                </Routes>
+            </TodoProvider>
         </BrowserRouter>
     </React.StrictMode>
 );
