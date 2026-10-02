@@ -15,8 +15,10 @@
     "windows": [
       {
         "title": "Tauri Todo App",
-        "width": 1280,
+        "width": 600,
         "height": 600,
+        "minWidth": 680,
+        "minHeight": 440,
         "decorations": false
         
       }
