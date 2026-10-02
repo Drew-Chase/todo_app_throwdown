@@ -1,6 +1,8 @@
 [workspace]
 resolver = "3"
-members = ["crates/*"]
-
+members = ["crates/shared", "crates/egui", 'crates/gpui', "crates/iced", "crates/tauri/src-tauri"]
 
 [workspace.dependencies]
+tracing = { version = "0.1", features = ["max_level_trace"] }
+tracing-subscriber = { version = "0.3", features = ["json", "env-filter"] }
+color-eyre = { version = "0.6.5", features = ["tracing-error", "track-caller"] }
