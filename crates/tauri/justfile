@@ -10,7 +10,6 @@ install:
 build: install
     @pnpm tsc
     @pnpm vite build
-    @cargo build --workspace --release
 
 dev: install
     @cargo tauri dev
