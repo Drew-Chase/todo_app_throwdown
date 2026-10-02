@@ -1,3 +1,4 @@
+use todo_commonlib::logging;
 use tracing::info;
 use util::logging::log;
 
@@ -27,7 +28,7 @@ pub fn run() {
     #[cfg(target_os = "linux")]
     fix_linux_wayland_rendering();
 
-    if let Err(e) = util::logging::setup_logging() {
+    if let Err(e) = logging::setup_logging() {
         eprintln!("failed to initialise logging: {e}");
     }
     if let Err(e) = color_eyre::install() {

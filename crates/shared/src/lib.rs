@@ -1,3 +1,5 @@
+pub mod logging;
+
 use sqlx::sqlite::SqliteJournalMode;
 use sqlx::{AssertSqlSafe, ConnectOptions, Connection, Executor, SqlSafeStr, Statement};
 use std::path::Path;
