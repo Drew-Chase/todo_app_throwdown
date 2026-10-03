@@ -5,6 +5,9 @@ set shell := ["bash", "-c"]
 tauri:
     @just dev
 
+iced:
+    @cargo run --profile dev --package iced_todo_app
+
 build:build-tauri
     @cargo build --release
 
