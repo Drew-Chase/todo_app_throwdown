@@ -1,3 +1,5 @@
+pub mod theme;
+
 use iced::window::{Level, Position};
 use iced::{Element, Size, Task};
 use iced::widget::row;
