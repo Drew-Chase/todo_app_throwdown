@@ -1,8 +1,10 @@
 pub mod theme;
+mod titlebar;
 
 use iced::window::{Level, Position};
 use iced::{Element, Size, Task};
-use iced::widget::row;
+use iced::widget::{row, column, text};
+use iced::widget::rule::FillMode::Percent;
 
 #[derive(Default)]
 pub struct TodoApp {}
@@ -11,7 +13,7 @@ pub struct TodoApp {}
 pub enum TodoAppMessage {}
 
 impl TodoApp {
-    pub const TITLE: &'static str = "Sift";
+    pub const TITLE: &'static str = "Todo App";
     /// The release major and minor versions.
     /// Ex: `0.0.0`
     pub const VERSION: &'static str = env!("CARGO_PKG_VERSION");
@@ -29,13 +31,20 @@ impl TodoApp {
     }
 
     pub fn view(&self) -> Element<'_, TodoAppMessage>{
-        row![].into()
+        column![
+            row![
+                text!("Todo App"),
+                
+
+
+            ]
+        ].into()
     }
 
     pub fn window_settings() -> iced::window::Settings {
         iced::window::Settings {
-            size: Size::new(1280f32, 800f32),
-            min_size: Some(Size::new(933f32, 776f32)),
+            size: Size::new(600f32, 600f32),
+            min_size: Some(Size::new(680f32, 440f32)),
             decorations: !cfg!(target_os = "windows"),
             resizable: true,
             #[cfg(target_os = "windows")]

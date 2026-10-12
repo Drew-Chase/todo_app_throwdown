@@ -2,9 +2,9 @@ mod app;
 mod math;
 
 use crate::app::TodoApp;
+use app::theme::color;
 use color_eyre::Result;
 use tracing::info;
-use app::theme::color;
 
 pub fn run() -> Result<()> {
     info!("Starting todo app v{}#{}", TodoApp::VERSION, TodoApp::BUILD);
@@ -13,8 +13,9 @@ pub fn run() -> Result<()> {
         .window(TodoApp::window_settings())
         .centered()
         .theme(iced::Theme::Light)
-        .style(|app, theme|iced::theme::Style{
-            text_color: color::Gold::_50
+        .style(|app, theme| iced::theme::Style {
+            text_color: color::Text::DEFAULT,
+            background_color: color::Surface::APPLICATION,
         })
         .run()?;
     Ok(())

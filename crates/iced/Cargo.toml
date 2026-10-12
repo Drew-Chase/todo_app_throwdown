@@ -15,6 +15,8 @@ iced = { version = "0.14", default-features = false, features = ["canvas", "adva
 color-eyre = { workspace = true }
 tracing = { workspace = true }
 
+aurora_leaf = {path="../aurora_leaf"}
+
 [build-dependencies]
 chrono = "0.4.45"
 walkdir = "2.5.0"

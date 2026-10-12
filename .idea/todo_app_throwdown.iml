@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/crates/shared/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/tauri/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/tauri/src-tauri/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/crates/aurora_leaf/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

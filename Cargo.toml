@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/shared", "crates/egui", 'crates/gpui', "crates/iced", "crates/tauri/src-tauri"]
+members = ["crates/shared", "crates/egui", 'crates/gpui', "crates/iced", "crates/tauri/src-tauri", "crates/aurora_leaf"]
 default-members = ["crates/shared", "crates/egui", 'crates/gpui', "crates/iced"]
 
 [workspace.dependencies]
