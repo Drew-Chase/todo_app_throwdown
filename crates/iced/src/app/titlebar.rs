@@ -4,7 +4,7 @@ use crate::app::theme::color;
 use crate::app::{TodoApp, TodoAppMessage};
 use aurora_leaf::Icon;
 use iced::widget::{Text, container, mouse_area, row};
-use iced::{Background, Element, Fill, Task, window};
+use iced::{window, Background, Element, Fill, Padding, Task};
 
 #[derive(Debug, Clone, Default)]
 pub struct Titlebar {}
@@ -37,6 +37,7 @@ impl Titlebar {
                         .size(18)
                         .font(crate::app::theme::fonts::Roboto::BOLD)
                 )
+                .padding(Padding::new(0.0).left(8).right(8).top(4))
                 .width(Fill)
                 .height(Fill),
             ])
