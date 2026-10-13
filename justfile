@@ -2,7 +2,7 @@ set windows-shell := ["powershell.exe", "-NoLogo", "-NoProfile","-Command"]
 set shell := ["bash", "-c"]
 
 @defualt:
-    @just --list
+    just --list
 
 [working-directory:"crates/tauri"]
 tauri:
