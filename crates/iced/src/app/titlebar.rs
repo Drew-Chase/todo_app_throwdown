@@ -67,36 +67,3 @@ impl Titlebar {
         .into()
     }
 }
-/*
-button(
-    container(icon(
-        Icon::material_symbols().close(),
-        16,
-        Some((
-            color::buttons::Danger::FOREGROUND_HOVER,
-            color::buttons::Danger::FOREGROUND
-        ))
-    ))
-    .height(Fill)
-    .width(Fill)
-)
-.height(Fill)
-.width(47)
-.style(|_theme, status| {
-    match status {
-        Status::Active => button::Style {
-            background: Some(Background::from(color::buttons::Danger::BACKGROUND)),
-            text_color: color::buttons::Danger::FOREGROUND,
-            ..Default::default()
-        },
-        Status::Disabled | Status::Pressed | Status::Hovered => button::Style {
-            background: Some(Background::from(
-                color::buttons::Danger::BACKGROUND_HOVER,
-            )),
-            text_color: color::buttons::Danger::FOREGROUND_HOVER,
-            ..Default::default()
-        },
-    }
-})
-.on_press(TitlebarMessage::Close)
- */
