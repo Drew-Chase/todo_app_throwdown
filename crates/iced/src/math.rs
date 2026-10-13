@@ -1,6 +1,8 @@
 use std::f64::consts::PI;
+#[allow(unused)]
 const TAU: f64 = 2.0 * PI;
 
+#[allow(unused)]
 /// Newton's method. `x` is expected in `0.0..=1.0`.
 pub const fn sqrt(x: f64) -> f64 {
     if x <= 0.0 {
@@ -18,7 +20,7 @@ pub const fn sqrt(x: f64) -> f64 {
     }
     guess
 }
-
+#[allow(unused)]
 /// Newton's method, sign-preserving. Accurate to 1–2 ULP across the full f64 range.
 pub const fn cbrt(x: f64) -> f64 {
     if x == 0.0 {
@@ -44,7 +46,7 @@ pub const fn cbrt(x: f64) -> f64 {
 
     if is_negative { -guess } else { guess }
 }
-
+#[allow(unused)]
 pub const fn cos(x: f64) -> f64 {
     let mut normalized_angle = x % TAU;
     if normalized_angle > PI {
@@ -66,14 +68,18 @@ pub const fn cos(x: f64) -> f64 {
     }
     taylor_sum
 }
-
+#[allow(unused)]
 pub const fn sin(x: f64) -> f64 {
     cos(x - PI / 2.0)
 }
+
+#[allow(unused)]
 pub const fn pow_5_12(x: f64) -> f64 {
     let cube_root = cbrt(x);
     cube_root * sqrt(sqrt(cube_root))
 }
+
+#[allow(unused)]
 pub mod color {
     use crate::math::{cos, sin};
     use iced::Color;
@@ -134,6 +140,8 @@ pub mod color {
         }
     }
 }
+
+#[allow(unused)]
 /// Converts em to px
 pub const fn rem(rem: f64) -> u64 {
     (rem * 16f64) as u64 // assumes default scaling

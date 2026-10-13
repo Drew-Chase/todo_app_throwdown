@@ -13,7 +13,7 @@ pub fn run() -> Result<()> {
         .window(TodoApp::window_settings())
         .centered()
         .theme(iced::Theme::Light)
-        .style(|app, theme| iced::theme::Style {
+        .style(|_app, _theme| iced::theme::Style {
             text_color: color::Text::DEFAULT,
             background_color: color::Surface::APPLICATION,
         })
