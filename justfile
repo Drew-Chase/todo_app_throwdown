@@ -1,6 +1,9 @@
 set windows-shell := ["powershell.exe", "-NoLogo", "-NoProfile","-Command"]
 set shell := ["bash", "-c"]
 
+@defualt:
+    @just --list
+
 [working-directory:"crates/tauri"]
 tauri:
     @just dev
@@ -14,3 +17,8 @@ build:build-tauri
 
 build-tauri:
     @cargo tauri build --no-bundle
+
+[windows]
+dist:build
+    @New-Item -Path .\target\dist -Type Directory -Force
+    @Copy-Item .\target\release\*.exe .\target\dist\
