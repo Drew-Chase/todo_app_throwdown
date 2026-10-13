@@ -1,5 +1,6 @@
 pub mod theme;
 mod titlebar;
+pub mod components;
 
 use crate::app::titlebar::{Titlebar, TitlebarMessage};
 use iced::widget::{column};
@@ -19,7 +20,7 @@ pub enum TodoAppMessage {
 }
 
 impl TodoApp {
-    pub const TITLE: &'static str = "Todo App";
+    pub const TITLE: &'static str = "Iced Todo App";
     /// The release major and minor versions.
     /// Ex: `0.0.0`
     pub const VERSION: &'static str = env!("CARGO_PKG_VERSION");

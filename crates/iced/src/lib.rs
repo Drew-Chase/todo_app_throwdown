@@ -5,6 +5,7 @@ use crate::app::TodoApp;
 use app::theme::color;
 use color_eyre::Result;
 use tracing::info;
+use aurora_leaf::FontFamily;
 
 pub fn run() -> Result<()> {
     info!("Starting todo app v{}#{}", TodoApp::VERSION, TodoApp::BUILD);
@@ -13,6 +14,8 @@ pub fn run() -> Result<()> {
         .window(TodoApp::window_settings())
         .centered()
         .theme(iced::Theme::Light)
+        .font(FontFamily::roboto().bold())
+        .font(FontFamily::roboto().regular())
         .style(|_app, _theme| iced::theme::Style {
             text_color: color::Text::DEFAULT,
             background_color: color::Surface::APPLICATION,
