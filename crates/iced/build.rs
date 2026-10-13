@@ -9,6 +9,7 @@ fn main() {
 		}
 	}
 	generate_build_number();
+	generate_icon();
 }
 
 
@@ -17,4 +18,11 @@ fn generate_build_number() {
 	let build = chrono::Local::now().format("%Y%m%d").to_string();
 	let build = format!("{}.{:06}", build, seconds_past_in_day);
 	println!("cargo:rustc-env=BUILD={build}");
+}
+
+fn generate_icon(){
+	let mut res = winres::WindowsResource::new();
+	res.set_icon("../../res/icons/icon.ico");
+	res.set("ProductName", "Iced Todo App");
+	res.compile().expect("Failed to compile resource");
 }

@@ -17,6 +17,10 @@ tracing = { workspace = true }
 
 aurora_leaf = {path="../aurora_leaf"}
 
+
 [build-dependencies]
-chrono = "0.4.45"
-walkdir = "2.5.0"
+chrono = { workspace = true}
+walkdir = {workspace = true}
+
+[target.'cfg(windows)'.build-dependencies]
+winres = {workspace = true}

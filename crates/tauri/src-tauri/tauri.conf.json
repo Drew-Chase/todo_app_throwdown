@@ -28,6 +28,23 @@
     "active": true,
     "targets": "all",
     "icon": [
+      "../../../res/icons/32x32.png",
+      "../../../res/icons/64x64.png",
+      "../../../res/icons/128x128.png",
+      "../../../res/icons/128x128@2x.png",
+      "../../../res/icons/icon.icns",
+      "../../../res/icons/icon.ico",
+      "../../../res/icons/icon.png",
+      "../../../res/icons/Square30x30Logo.png",
+      "../../../res/icons/Square44x44Logo.png",
+      "../../../res/icons/Square71x71Logo.png",
+      "../../../res/icons/Square89x89Logo.png",
+      "../../../res/icons/Square107x107Logo.png",
+      "../../../res/icons/Square142x142Logo.png",
+      "../../../res/icons/Square150x150Logo.png",
+      "../../../res/icons/Square284x284Logo.png",
+      "../../../res/icons/Square310x310Logo.png",
+      "../../../res/icons/StoreLogo.png"
     ]
   }
 }

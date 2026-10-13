@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img">
+  <title>T Todo App — italic T icon</title>
+  <defs>
+    <linearGradient id="bg-grad" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FCF9F4"/>
+      <stop offset="1" stop-color="#F2EBE1"/>
+    </linearGradient>
+    <linearGradient id="t-grad" x1="512" y1="236" x2="512" y2="818" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF5A64"/>
+      <stop offset="1" stop-color="#CE1F39"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Light background tile with rounded corners -->
+  <rect x="0" y="0" width="1024" height="1024" rx="220" fill="url(#bg-grad)"/>
+
+  <!-- Rounded border in the brand accent (#f13848) -->
+  <rect x="42" y="42" width="940" height="940" rx="178" fill="none" stroke="#F13848" stroke-width="16"/>
+
+  <!-- Fancy italic T: lens-shaped swash bar + tapered stem with calligraphic tail.
+       Drawn upright, then skewed 11° for the italic lean. Pure paths, no fonts. -->
+  <g transform="translate(60 -12) skewX(-11)" fill="url(#t-grad)">
+    <!-- Crossbar: pointed tips, swelling towards the middle -->
+    <path d="M 186 308
+             C 240 252 350 236 512 236
+             C 674 236 784 252 838 308
+             C 786 340 676 356 512 356
+             C 348 356 238 340 186 308 Z"/>
+    <!-- Stem: thick at the top, tapering into a rightward swash tail -->
+    <path d="M 452 316
+             C 446 430 452 580 468 692
+             C 476 762 512 806 574 814
+             C 640 822 700 796 724 748
+             C 706 786 650 796 600 780
+             C 562 768 548 740 542 700
+             C 534 560 534 430 540 318 Z"/>
+  </g>
+</svg>
