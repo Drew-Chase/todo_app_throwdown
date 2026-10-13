@@ -1,22 +1,23 @@
+pub mod components;
 pub mod theme;
 mod titlebar;
-pub mod components;
 
+use crate::app::theme::color::Surface;
 use crate::app::titlebar::{Titlebar, TitlebarMessage};
-use iced::widget::{column};
+use iced::widget::{column, container, text};
 use iced::window::{Id, Level, Position};
-use iced::{window, Element, Size, Task};
+use iced::{Element, Fill, Padding, Size, Task, window};
 
 #[derive(Default)]
 pub struct TodoApp {
     id: Option<Id>,
-    titlebar: Titlebar
+    titlebar: Titlebar,
 }
 
 #[derive(Debug, Clone)]
 pub enum TodoAppMessage {
     WindowCreation(Option<Id>),
-    TitlebarMessage(TitlebarMessage)
+    TitlebarMessage(TitlebarMessage),
 }
 
 impl TodoApp {
@@ -37,12 +38,12 @@ impl TodoApp {
     pub fn update(&mut self, message: TodoAppMessage) -> Task<TodoAppMessage> {
         match message {
             TodoAppMessage::TitlebarMessage(message) => {
-                if let Some(id) = self.id{
-                self.titlebar.update(message, id)
-                }else{
+                if let Some(id) = self.id {
+                    self.titlebar.update(message, id)
+                } else {
                     Task::none()
                 }
-            },
+            }
             TodoAppMessage::WindowCreation(id) => {
                 self.id = id;
                 Task::none()
@@ -53,19 +54,38 @@ impl TodoApp {
     pub fn view(&self) -> Element<'_, TodoAppMessage> {
         column![
             self.titlebar.view().map(TodoAppMessage::TitlebarMessage),
+            container(
+                container(column![
+                    text!("Tasks")
+                        .size(36)
+                        .color(theme::color::Text::DEFAULT)
+                        .font(theme::fonts::Roboto::BOLD)
+                        .width(Fill)
+                ])
+                .width(Fill)
+                .max_width(576)
+                .height(Fill)
+                .padding(Padding {
+                    left: 16.0,
+                    right: 16.0,
+                    top: 32.0,
+                    bottom: 32.0
+                })
+            )
+            .center_x(Fill)
         ]
         .into()
     }
 
-    pub fn window_settings() -> iced::window::Settings {
-        iced::window::Settings {
+    pub fn window_settings() -> window::Settings {
+        window::Settings {
             size: Size::new(600f32, 600f32),
             min_size: Some(Size::new(680f32, 440f32)),
             decorations: !cfg!(target_os = "windows"),
             resizable: true,
             #[cfg(target_os = "windows")]
-            platform_specific: iced::window::settings::PlatformSpecific {
-                corner_preference: iced::window::settings::platform::CornerPreference::Default,
+            platform_specific: window::settings::PlatformSpecific {
+                corner_preference: window::settings::platform::CornerPreference::Default,
                 undecorated_shadow: true,
                 drag_and_drop: true,
                 skip_taskbar: false,
