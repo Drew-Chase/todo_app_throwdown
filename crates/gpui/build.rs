@@ -20,8 +20,11 @@ fn generate_build_number() {
 }
 
 fn generate_icon() {
-    let mut res = winres::WindowsResource::new();
-    res.set_icon("../../res/icons/icon.ico");
-    res.set("ProductName", "GPUI Todo App");
-    res.compile().expect("Failed to compile resource");
+    #[cfg(windows)]
+    {
+        let mut res = winres::WindowsResource::new();
+        res.set_icon("../../res/icons/icon.ico");
+        res.set("ProductName", "Iced Todo App");
+        res.compile().expect("Failed to compile resource");
+    }
 }
