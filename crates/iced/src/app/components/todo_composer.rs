@@ -10,30 +10,30 @@ pub struct TodoSubmission {
     pub description: String,
 }
 #[derive(Default)]
-pub struct InputForm {
+pub struct TodoComposer {
     title: String,
     description: String,
 }
 
 #[derive(Debug, Clone)]
-pub enum InputFormMessage {
+pub enum TodoComposerMessage {
     TitleChanged(String),
     DescriptionChanged(String),
     SubmitRequested,
 }
 
-impl InputForm {
-    pub fn update(&mut self, message: InputFormMessage) -> Option<TodoSubmission> {
+impl TodoComposer {
+    pub fn update(&mut self, message: TodoComposerMessage) -> Option<TodoSubmission> {
         match message {
-            InputFormMessage::TitleChanged(value) => {
+            TodoComposerMessage::TitleChanged(value) => {
                 self.title = value;
                 None
             }
-            InputFormMessage::DescriptionChanged(value) => {
+            TodoComposerMessage::DescriptionChanged(value) => {
                 self.description = value;
                 None
             }
-            InputFormMessage::SubmitRequested => {
+            TodoComposerMessage::SubmitRequested => {
                 let submission = TodoSubmission {
                     title: std::mem::take(&mut self.title),
                     description: std::mem::take(&mut self.description),
@@ -45,7 +45,7 @@ impl InputForm {
         }
     }
 
-    pub fn view(&self) -> Element<'_, InputFormMessage> {
+    pub fn view(&self) -> Element<'_, TodoComposerMessage> {
         container(column![
             text_input("What needs doing?", &self.title)
                 .padding(Padding::new(8.0).left(4).right(4))
@@ -72,8 +72,8 @@ impl InputForm {
                     }
                 })
                 .line_height(1.5)
-                .on_input(InputFormMessage::TitleChanged)
-                .on_submit(InputFormMessage::SubmitRequested)
+                .on_input(TodoComposerMessage::TitleChanged)
+                .on_submit(TodoComposerMessage::SubmitRequested)
                 .width(Fill),
             space().height(4),
             text_input("Add details (optional)", &self.description)
@@ -101,8 +101,8 @@ impl InputForm {
                         _ => default,
                     }
                 })
-                .on_input(InputFormMessage::DescriptionChanged)
-                .on_submit(InputFormMessage::SubmitRequested),
+                .on_input(TodoComposerMessage::DescriptionChanged)
+                .on_submit(TodoComposerMessage::SubmitRequested),
             space().height(Fill),
             row![
                 text!("Press Enter to add")
@@ -112,7 +112,7 @@ impl InputForm {
                     .width(Fill),
                 IconButton::new(Icon::material_symbols().add_rounded())
                     .style(PRIMARY_BUTTON_STYLE)
-                    .on_press(InputFormMessage::SubmitRequested)
+                    .on_press(TodoComposerMessage::SubmitRequested)
                     .disabled(self.title.is_empty())
                     .width(40)
                     .height(40)

@@ -1,4 +1,4 @@
-use crate::app::components::input_form::{InputForm, InputFormMessage};
+use crate::app::components::todo_composer::{TodoComposer, TodoComposerMessage};
 use crate::app::{
     TodoAppMessage,
     theme::{color, fonts},
@@ -13,12 +13,12 @@ use tracing::{debug, error};
 
 #[derive(Default)]
 pub struct BasePage {
-    input_form: InputForm,
+    input_form: TodoComposer,
     list: TodoList,
 }
 #[derive(Debug)]
 pub enum BasePageMessage {
-    InputForm(InputFormMessage),
+    InputForm(TodoComposerMessage),
     UpdateList(TodoList),
     RefreshTodoList,
     Error(TodoAppError),
@@ -69,7 +69,9 @@ impl BasePage {
             self.input_form.view().map(BasePageMessage::InputForm),
             space().height(22),
             // Task List
-            container(scrollable(row![]).width(Fill).height(Fill))
+            container(scrollable(row![
+                
+            ]).width(Fill).height(Fill))
                 .height(184)
                 .width(Fill)
                 .style(|_| container::Style::default()
