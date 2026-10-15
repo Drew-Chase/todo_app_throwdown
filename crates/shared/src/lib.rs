@@ -3,6 +3,7 @@ pub mod logging;
 use sqlx::sqlite::SqliteJournalMode;
 use sqlx::{AssertSqlSafe, ConnectOptions, Connection, Executor, SqlSafeStr, Statement};
 use std::path::Path;
+use tracing::{debug, info};
 
 #[derive(thiserror::Error, Debug)]
 pub enum TodoAppError {
@@ -19,7 +20,7 @@ pub struct TodoItem {
     pub description: String,
     pub done: bool,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, Default)]
 pub struct TodoList {
     pub list: Vec<TodoItem>,
 }
@@ -28,6 +29,7 @@ const TODO_TABLE_NAME: &str = "todos";
 
 impl TodoList {
     pub async fn initialize() -> Result<(), TodoAppError> {
+        info!("Initializing todo database");
         let mut connection = open().await?;
         connection
             .execute(AssertSqlSafe(format!(
@@ -45,6 +47,7 @@ CREATE TABLE IF NOT EXISTS `{TODO_TABLE_NAME}`
         Ok(())
     }
     pub async fn get() -> Result<Self, TodoAppError> {
+        debug!("Fetching todo list");
         let mut connection = open().await?;
 
         let items: Vec<TodoItem> = sqlx::query_as::<_, TodoItem>(AssertSqlSafe(format!(
@@ -57,6 +60,7 @@ CREATE TABLE IF NOT EXISTS `{TODO_TABLE_NAME}`
         Ok(Self { list: items })
     }
     pub async fn insert(title: String, description: String) -> Result<i64, TodoAppError> {
+        info!("Inserting todo item '{title}'");
         let mut connection = open().await?;
         let stmt = connection
             .prepare(
@@ -69,17 +73,19 @@ CREATE TABLE IF NOT EXISTS `{TODO_TABLE_NAME}`
 
         let id = stmt
             .query()
-            .bind(title)
+            .bind(title.clone())
             .bind(description)
             .execute(&mut connection)
             .await?
             .last_insert_rowid();
         connection.close().await?;
 
+        info!("Inserted todo item '{title}' (id {id})");
         Ok(id)
     }
 
     pub async fn mark_done(id: i64) -> Result<(), TodoAppError> {
+        info!("Marking todo item {id} as done");
         let mut connection = open().await?;
         let stmt = connection
             .prepare(
@@ -96,6 +102,7 @@ CREATE TABLE IF NOT EXISTS `{TODO_TABLE_NAME}`
     }
 
     pub async fn mark_undone(id: i64) -> Result<(), TodoAppError> {
+        info!("Marking todo item {id} as undone");
         let mut connection = open().await?;
         let stmt = connection
             .prepare(
@@ -112,6 +119,7 @@ CREATE TABLE IF NOT EXISTS `{TODO_TABLE_NAME}`
     }
 
     pub async fn delete(id: i64) -> Result<(), TodoAppError> {
+        info!("Deleting todo item {id}");
         let mut connection = open().await?;
         let stmt = connection
             .prepare(
@@ -137,6 +145,7 @@ impl TodoItem {
     }
 
     pub async fn get(id: i64) -> Result<Self, TodoAppError> {
+        debug!("Fetching todo item {id}");
         let mut connection = open().await?;
 
         let items = sqlx::query_as::<_, TodoItem>(AssertSqlSafe(format!(
@@ -170,6 +179,7 @@ async fn open() -> Result<sqlx::sqlite::SqliteConnection, TodoAppError> {
     let current_exe = std::env::current_exe()?;
     let parent = current_exe.parent().unwrap_or(Path::new(""));
     let file = parent.join("todo.db");
+    debug!("Opening todo database at '{}'", file.display());
     let options = sqlx::sqlite::SqliteConnectOptions::new()
         .filename(file)
         .journal_mode(SqliteJournalMode::Wal)
