@@ -9,7 +9,7 @@ use aurora_leaf::FontFamily;
 
 pub fn run() -> Result<()> {
     info!("Starting todo app v{}#{}", TodoApp::VERSION, TodoApp::BUILD);
-    iced::application(TodoApp::new, TodoApp::update, TodoApp::view)
+    iced::application(TodoApp::boot, TodoApp::update, TodoApp::view)
         .title(TodoApp::TITLE)
         .window(TodoApp::window_settings())
         .centered()

@@ -1,49 +1,53 @@
 pub mod color {
-    use iced::Color;
+    use iced::{Color, Shadow, color};
 
+    // 0 1px 2px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.07)), 0 2px 6px 2px var(--tw-shadow-color, rgb(0 0 0 / 0.05))
+    pub const CARD_SHADOW: Shadow = Shadow {
+        offset: iced::Vector::new(0.0, 2.0),
+        color: Color::from_rgba8(0x00, 0x00, 0x00, 0.07),
+        blur_radius: 3.0,
+    };
 
     pub struct Text;
 
     impl Text {
-        pub const DEFAULT: Color = Color::from_rgb8(0x18, 0x18, 0x1b);
-        pub const PLACEHOLDER: Color = Color::from_rgb8(0x8e, 0x8e, 0x95);
+        pub const DEFAULT: Color = color!(0x18181b);
+        pub const PLACEHOLDER: Color = color!(0x8e8e95);
     }
 
     pub struct Surface;
     impl Surface {
-        pub const APPLICATION: Color = Color::from_rgb8(0xe3, 0xe3, 0xea);
-        pub const CARD: Color = Color::from_rgb8(0xff, 0xff, 0xff);
-        pub const TITLEBAR: Color = Color::from_rgb8(0xf3, 0xf4, 0xf6);
-        pub const BUTTON: Color = Color::from_rgb8(0xf1, 0x44, 0x4e);
-        pub const BUTTON_HOVER: Color = Color::from_rgb8(0xf5, 0x5c, 0x5f);
-        pub const CLOSE_BUTTON_HOVER: Color = Color::from_rgb8(0xff, 0x46, 0x44);
-        pub const PRIMARY_DARK: Color = Color::from_rgb8(0xaa, 0x3b, 0x3f);
+        pub const APPLICATION: Color = color!(0xe3e3ea);
+        pub const CARD: Color = color!(0xffffff);
+        pub const TITLEBAR: Color = color!(0xf3f4f6);
+        pub const PRIMARY_DARK: Color = color!(0xaa3b3f);
+        pub const PRIMARY: Color = color!(0xf13848);
     }
 
     pub mod buttons {
-        use iced::Color;
+        use iced::{Color, color};
 
         pub struct Primary;
         impl Primary {
             pub const FOREGROUND: Color = Color::WHITE;
-            pub const BACKGROUND: Color = Color::from_rgb8(0xf1, 0x44, 0x4e); // Primary Red
-            pub const BACKGROUND_HOVER: Color = Color::from_rgb8(0xf5, 0x5c, 0x5f);
-            pub const BACKGROUND_DISABLED: Color = Color::from_rgb8(0xf8, 0xa1, 0xa6);
+            pub const BACKGROUND: Color = color!(0xf1444e); // Primary Red
+            pub const BACKGROUND_HOVER: Color = color!(0xf55c5f);
+            pub const BACKGROUND_DISABLED: Color = color!(0xf8a1a6);
         }
 
         pub struct Secondary;
         impl Secondary {
             pub const FOREGROUND: Color = super::Text::DEFAULT;
             pub const BACKGROUND: Color = Color::TRANSPARENT;
-            pub const BACKGROUND_HOVER: Color = Color::from_rgb8(0xe5, 0xe7, 0xeb);
+            pub const BACKGROUND_HOVER: Color = color!(0xe5e7eb);
         }
 
         pub struct Danger;
         impl Danger {
-            pub const FOREGROUND: Color = Color::from_rgb8(0xa4,0x3a,0x37);
+            pub const FOREGROUND: Color = color!(0xa43a37);
             pub const FOREGROUND_HOVER: Color = Color::WHITE;
             pub const BACKGROUND: Color = Color::TRANSPARENT;
-            pub const BACKGROUND_HOVER: Color = Color::from_rgb8(0xff,0x46,0x44);
+            pub const BACKGROUND_HOVER: Color = color!(0xff4644);
         }
     }
 }

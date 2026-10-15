@@ -1,28 +1,34 @@
 pub mod components;
+pub mod pages;
 pub mod theme;
 mod titlebar;
 
+use crate::app::pages::base::{BasePage, BasePageMessage};
 use crate::app::theme::color::Surface;
 use crate::app::titlebar::{Titlebar, TitlebarMessage};
-use iced::widget::{column, container, stack, text};
+use iced::widget::{column, container, scrollable, stack};
 use iced::window::{Direction, Id, Level, Position};
 use iced::{Element, Fill, Padding, Size, Subscription, Task, window};
 use iced_borderless_window_resize_handle_widget::{ResizeHandles, drag_resize};
+use todo_commonlib::TodoList;
 
 #[derive(Default)]
 pub struct TodoApp {
     id: Option<Id>,
     titlebar: Titlebar,
+    base_page: BasePage,
     maximized: bool,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub enum TodoAppMessage {
     WindowCreation(Option<Id>),
     WindowStartResize(Direction),
     WindowSizeChanged(Id, Size),
     TitlebarMessage(TitlebarMessage),
+    BasePageMessage(BasePageMessage),
     WindowMaximized(bool),
+    NoOp
 }
 
 impl TodoApp {
@@ -34,20 +40,19 @@ impl TodoApp {
     /// Ex: `20260827.032580`
     pub const BUILD: &'static str = env!("BUILD");
 
-    pub fn new() -> (Self, Task<TodoAppMessage>) {
+    pub fn boot() -> (Self, Task<TodoAppMessage>) {
         let id = window::latest();
+        _ = TodoList::initialize(); // We don't need to wait for this to finish
         let app = Self { ..Self::default() };
-        (app, Task::batch([id.map(TodoAppMessage::WindowCreation)]))
+        (app, Task::batch([id.map(TodoAppMessage::WindowCreation), Task::future(TodoList::initialize()).map(|_|TodoAppMessage::NoOp)]))
     }
 
     pub fn update(&mut self, message: TodoAppMessage) -> Task<TodoAppMessage> {
         match message {
-            TodoAppMessage::TitlebarMessage(message) => {
-                match self.id {
-                    Some(id) => self.titlebar.update(message, id),
-                    None => Task::none(),
-                }
-            }
+            TodoAppMessage::TitlebarMessage(message) => match self.id {
+                Some(id) => self.titlebar.update(message, id),
+                None => Task::none(),
+            },
             TodoAppMessage::WindowCreation(id) => {
                 self.id = id;
                 Task::none()
@@ -63,6 +68,8 @@ impl TodoApp {
                 self.maximized = maximized;
                 Task::none()
             }
+            TodoAppMessage::BasePageMessage(message) => self.base_page.update(message),
+            TodoAppMessage::NoOp => Task::none(),
         }
     }
 
@@ -70,29 +77,27 @@ impl TodoApp {
         stack![
             column![
                 self.titlebar.view().map(TodoAppMessage::TitlebarMessage),
-                container(
-                    container(column![
-                        text!("Tasks")
-                            .size(36)
-                            .color(theme::color::Text::DEFAULT)
-                            .font(theme::fonts::Roboto::BOLD)
+                scrollable(
+                    container(
+                        container(self.base_page.view().map(TodoAppMessage::BasePageMessage))
                             .width(Fill)
-                    ])
-                    .width(Fill)
-                    .max_width(576)
-                    .height(Fill)
-                    .padding(Padding {
-                        left: 16.0,
-                        right: 16.0,
-                        top: 32.0,
-                        bottom: 32.0
+                            .max_width(576)
+                            .height(Fill)
+                            .padding(Padding {
+                                left: 16.0,
+                                right: 16.0,
+                                top: 32.0,
+                                bottom: 32.0
+                            })
+                    )
+                    .style(|_| container::Style {
+                        background: Some(iced::Background::Color(Surface::APPLICATION)),
+                        ..Default::default()
                     })
+                    .center_x(Fill)
                 )
-                .style(|_| container::Style {
-                    background: Some(iced::Background::Color(Surface::APPLICATION)),
-                    ..Default::default()
-                })
-                .center_x(Fill)
+                .width(Fill)
+                .height(Fill)
             ],
             ResizeHandles::new(TodoAppMessage::WindowStartResize)
                 .gutter(4.0)

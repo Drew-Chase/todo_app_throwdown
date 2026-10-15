@@ -1,0 +1,85 @@
+use crate::app::components::input_form::{InputForm, InputFormMessage};
+use crate::app::theme::ColorExt;
+use crate::app::theme::color::CARD_SHADOW;
+use crate::app::{
+    TodoAppMessage,
+    theme::{color, fonts},
+};
+use iced::widget::{container, row, scrollable, space, text_input};
+use iced::{
+    Border, Element, Fill, Shadow, Task, Vector,
+    widget::{column, text},
+};
+use std::result;
+use todo_commonlib::{TodoAppError, TodoList};
+use tracing::error;
+
+#[derive(Default)]
+pub struct BasePage {
+    input_form: InputForm,
+    list: TodoList,
+}
+#[derive(Debug)]
+pub enum BasePageMessage {
+    InputForm(InputFormMessage),
+    UpdateList(TodoList),
+    RefreshTodoList,
+    Error(TodoAppError),
+    NoOp,
+}
+
+impl BasePage {
+    pub fn update(&mut self, message: BasePageMessage) -> Task<TodoAppMessage> {
+        match message {
+            BasePageMessage::InputForm(input_form) => match self.input_form.update(input_form) {
+                Some(submission) => Task::perform(
+                    TodoList::insert(submission.title, submission.description),
+                    |result| match result {
+                        Ok(_) => BasePageMessage::RefreshTodoList,
+                        Err(e) => BasePageMessage::Error(e),
+                    },
+                )
+                .map(TodoAppMessage::BasePageMessage),
+                None => Task::none(),
+            },
+            BasePageMessage::UpdateList(list) => {
+                self.list = list;
+                Task::none()
+            }
+            BasePageMessage::RefreshTodoList => {
+                Task::perform(TodoList::get(), |result| match result {
+                    Ok(items) => BasePageMessage::UpdateList(items),
+                    Err(e) => BasePageMessage::Error(e),
+                })
+                .map(TodoAppMessage::BasePageMessage)
+            }
+            BasePageMessage::Error(e) => {
+                // TODO: Show the error to the user in some way!
+                error!("{}", e);
+                Task::none()
+            }
+            BasePageMessage::NoOp => Task::none(),
+        }
+    }
+    pub fn view(&self) -> Element<'_, BasePageMessage> {
+        column![
+            text!("Tasks")
+                .size(36)
+                .color(color::Text::DEFAULT)
+                .font(fonts::Roboto::BOLD)
+                .width(Fill),
+            space().height(32),
+            // Input form
+            self.input_form.view().map(BasePageMessage::InputForm),
+            space().height(22),
+            // Task List
+            container(scrollable(row![]).width(Fill).height(Fill))
+                .height(184)
+                .width(Fill)
+                .style(|_| container::Style::default()
+                    .background(color::Surface::CARD)
+                    .border(Border::default().rounded(28.0)))
+        ]
+        .into()
+    }
+}

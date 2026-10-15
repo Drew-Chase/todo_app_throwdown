@@ -1,0 +1,129 @@
+use crate::app::components::icon_button::{IconButton, PRIMARY_BUTTON_STYLE};
+use crate::app::theme::color;
+use crate::app::theme::color::{Surface, Text};
+use aurora_leaf::Icon;
+use iced::widget::{column, container, row, space, text, text_input};
+use iced::{Background, Border, Color, Element, Fill, Padding};
+
+pub struct TodoSubmission {
+    pub title: String,
+    pub description: String,
+}
+#[derive(Default)]
+pub struct InputForm {
+    title: String,
+    description: String,
+}
+
+#[derive(Debug, Clone)]
+pub enum InputFormMessage {
+    TitleChanged(String),
+    DescriptionChanged(String),
+    SubmitRequested,
+}
+
+impl InputForm {
+    pub fn update(&mut self, message: InputFormMessage) -> Option<TodoSubmission> {
+        match message {
+            InputFormMessage::TitleChanged(value) => {
+                self.title = value;
+                None
+            }
+            InputFormMessage::DescriptionChanged(value) => {
+                self.description = value;
+                None
+            }
+            InputFormMessage::SubmitRequested => {
+                let submission = TodoSubmission {
+                    title: std::mem::take(&mut self.title),
+                    description: std::mem::take(&mut self.description),
+                };
+                self.title = String::new();
+                self.description = String::new();
+                Some(submission)
+            }
+        }
+    }
+
+    pub fn view(&self) -> Element<'_, InputFormMessage> {
+        container(column![
+            text_input("What needs doing?", &self.title)
+                .padding(Padding::new(8.0).left(4).right(4))
+                .size(18)
+                .style(|_theme, status| {
+                    let default = text_input::Style {
+                        background: Background::Color(Color::TRANSPARENT),
+                        border: Border::default()
+                            .color(Color::TRANSPARENT)
+                            .width(2)
+                            .rounded(8),
+                        icon: Default::default(),
+                        placeholder: Text::PLACEHOLDER,
+                        value: Text::DEFAULT,
+                        selection: Surface::PRIMARY_DARK,
+                    };
+                    match status {
+                        text_input::Status::Focused { .. } => text_input::Style {
+                            border: default.border.color(Surface::PRIMARY),
+                            ..default
+                        },
+                        _ => default,
+                    }
+                })
+                .line_height(1.5)
+                .on_input(InputFormMessage::TitleChanged)
+                .on_submit(InputFormMessage::SubmitRequested)
+                .width(Fill),
+            space().height(4),
+            text_input("Add details (optional)", &self.description)
+                .padding(Padding::new(8.0).left(4).right(4))
+                .line_height(1.5)
+                .size(14)
+                .style(|_theme, status| {
+                    let default = text_input::Style {
+                        background: Background::Color(Color::TRANSPARENT),
+                        border: Border::default()
+                            .color(Color::TRANSPARENT)
+                            .width(2)
+                            .rounded(8),
+                        icon: Default::default(),
+                        placeholder: Text::PLACEHOLDER,
+                        value: Text::DEFAULT,
+                        selection: Surface::PRIMARY_DARK,
+                    };
+                    match status {
+                        text_input::Status::Focused { .. } => text_input::Style {
+                            border: default.border.color(Surface::PRIMARY),
+                            ..default
+                        },
+                        _ => default,
+                    }
+                })
+                .on_input(InputFormMessage::DescriptionChanged)
+                .on_submit(InputFormMessage::SubmitRequested),
+            space().height(Fill),
+            row![
+                text!("Press Enter to add")
+                    .size(12)
+                    .color(Text::PLACEHOLDER)
+                    .width(Fill),
+                IconButton::new(Icon::material_symbols().add_rounded())
+                    .style(PRIMARY_BUTTON_STYLE)
+                    .on_press(InputFormMessage::SubmitRequested)
+                    .disabled(self.title.is_empty())
+                    .width(40)
+                    .height(40)
+                    .radius(100)
+            ]
+        ])
+        .padding(16)
+        .height(184)
+        .width(Fill)
+        .style(|_| {
+            container::Style::default()
+                .background(Surface::CARD)
+                .border(Border::default().rounded(28.0))
+        })
+        .into()
+    }
+}
