@@ -3,9 +3,9 @@ mod math;
 
 use crate::app::TodoApp;
 use app::theme::color;
+use aurora_leaf::FontFamily;
 use color_eyre::Result;
 use tracing::info;
-use aurora_leaf::FontFamily;
 
 pub fn run() -> Result<()> {
     info!("Starting todo app v{}#{}", TodoApp::VERSION, TodoApp::BUILD);

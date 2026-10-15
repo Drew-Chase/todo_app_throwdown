@@ -7,8 +7,8 @@ edition = "2024"
 todo_commonlib = { path = "../shared" }
 
 [build-dependencies]
-chrono = { workspace = true}
-walkdir = {workspace = true}
+chrono = { workspace = true }
+walkdir = { workspace = true }
 
 [target.'cfg(windows)'.build-dependencies]
-winres = {workspace = true}
+winres = { workspace = true }

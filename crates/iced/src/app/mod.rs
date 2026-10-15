@@ -10,8 +10,8 @@ use iced::widget::{column, container, scrollable, stack};
 use iced::window::{Direction, Id, Level, Position};
 use iced::{Element, Fill, Padding, Size, Subscription, Task, window};
 use iced_borderless_window_resize_handle_widget::{ResizeHandles, drag_resize};
-use tracing::{debug, info};
 use todo_commonlib::TodoList;
+use tracing::{debug, info};
 
 #[derive(Default)]
 pub struct TodoApp {
@@ -29,7 +29,7 @@ pub enum TodoAppMessage {
     TitlebarMessage(TitlebarMessage),
     BasePageMessage(BasePageMessage),
     WindowMaximized(bool),
-    NoOp
+    NoOp,
 }
 
 impl TodoApp {
@@ -45,7 +45,13 @@ impl TodoApp {
         let id = window::latest();
         _ = TodoList::initialize(); // We don't need to wait for this to finish
         let app = Self { ..Self::default() };
-        (app, Task::batch([id.map(TodoAppMessage::WindowCreation), Task::future(TodoList::initialize()).map(|_|TodoAppMessage::NoOp)]))
+        (
+            app,
+            Task::batch([
+                id.map(TodoAppMessage::WindowCreation),
+                Task::future(TodoList::initialize()).map(|_| TodoAppMessage::NoOp),
+            ]),
+        )
     }
 
     pub fn update(&mut self, message: TodoAppMessage) -> Task<TodoAppMessage> {

@@ -73,4 +73,3 @@ pub async fn initialize() -> Result<(), String> {
     })?;
     Ok(())
 }
-

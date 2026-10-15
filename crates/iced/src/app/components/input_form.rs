@@ -1,5 +1,4 @@
 use crate::app::components::icon_button::{IconButton, PRIMARY_BUTTON_STYLE};
-use crate::app::theme::color;
 use crate::app::theme::color::{Surface, Text};
 use aurora_leaf::Icon;
 use iced::widget::{column, container, row, space, text, text_input};

@@ -1,16 +1,13 @@
 use crate::app::components::input_form::{InputForm, InputFormMessage};
-use crate::app::theme::ColorExt;
-use crate::app::theme::color::CARD_SHADOW;
 use crate::app::{
     TodoAppMessage,
     theme::{color, fonts},
 };
-use iced::widget::{container, row, scrollable, space, text_input};
+use iced::widget::{container, row, scrollable, space};
 use iced::{
-    Border, Element, Fill, Shadow, Task, Vector,
+    Border, Element, Fill, Task, Vector,
     widget::{column, text},
 };
-use std::result;
 use todo_commonlib::{TodoAppError, TodoList};
 use tracing::{debug, error};
 

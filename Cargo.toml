@@ -9,14 +9,14 @@ tracing-subscriber = { version = "0.3", features = ["json", "env-filter"] }
 color-eyre = { version = "0.6.5", features = ["tracing-error", "track-caller"] }
 
 # Windows Specific
-winres =  {version = "0.1.12"}
+winres = { version = "0.1.12" }
 
 # Build
 chrono = { version = "0.4.45" }
 walkdir = { version = "2.5.0" }
 
 [profile.release]
-lto=true
+lto = true
 codegen-units = 1
 panic = "abort"
 opt-level = "z"
