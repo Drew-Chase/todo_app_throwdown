@@ -49,6 +49,7 @@ pub struct IconButton<Message> {
     style: IconButtonStyle,
     radius: Radius,
     on_press: Option<Message>,
+    disabled: bool,
 }
 #[derive(Default)]
 pub struct IconButtonState {
@@ -77,6 +78,7 @@ impl<Message> Default for IconButton<Message> {
             radius: Default::default(),
             on_press: None,
             style: Default::default(),
+            disabled: false,
         }
     }
 }
@@ -118,6 +120,10 @@ impl<Message> IconButton<Message> {
         self.on_press = Some(on_press);
         self
     }
+    pub fn disabled(mut self, disabled: bool) -> Self {
+        self.disabled = disabled;
+        self
+    }
 }
 
 impl<Message: Clone> Widget<Message, Theme, BaseRenderer> for IconButton<Message> {
@@ -143,7 +149,7 @@ impl<Message: Clone> Widget<Message, Theme, BaseRenderer> for IconButton<Message
         _viewport: &Rectangle,
     ) {
         let state = tree.state.downcast_ref::<IconButtonState>();
-        let (fg, bg) = if self.on_press.is_none() {
+        let (fg, bg) = if self.disabled || self.on_press.is_none() {
             (
                 self.style.foreground_disabled,
                 self.style.background_disabled,
@@ -211,7 +217,7 @@ impl<Message: Clone> Widget<Message, Theme, BaseRenderer> for IconButton<Message
 
         match event {
             Event::Mouse(mouse::Event::ButtonPressed(mouse::Button::Left)) => {
-                if self.on_press.is_some() && is_over {
+                if self.on_press.is_some() && is_over && !self.disabled {
                     state.is_pressed = true;
                     shell.capture_event();
                     shell.request_redraw();
