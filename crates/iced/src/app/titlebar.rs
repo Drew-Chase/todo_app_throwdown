@@ -5,6 +5,7 @@ use crate::app::{TodoApp, TodoAppMessage};
 use aurora_leaf::Icon;
 use iced::widget::{Text, container, mouse_area, row};
 use iced::{Background, Element, Fill, Padding, Task, window};
+use tracing::{debug, info};
 
 #[derive(Debug, Clone, Default)]
 pub struct Titlebar;
@@ -23,10 +24,22 @@ impl Titlebar {
         window_id: window::Id,
     ) -> Task<TodoAppMessage> {
         match message {
-            TitlebarMessage::ToggleMaximized => window::toggle_maximize(window_id),
-            TitlebarMessage::ToggleMinimize => window::minimize(window_id, true),
-            TitlebarMessage::Close => window::close(window_id),
-            TitlebarMessage::StartDragWindow => window::drag(window_id),
+            TitlebarMessage::ToggleMaximized => {
+                info!("Toggling maximize on window {window_id}");
+                window::toggle_maximize(window_id)
+            }
+            TitlebarMessage::ToggleMinimize => {
+                info!("Minimizing window {window_id}");
+                window::minimize(window_id, true)
+            }
+            TitlebarMessage::Close => {
+                info!("Closing window {window_id}");
+                window::close(window_id)
+            }
+            TitlebarMessage::StartDragWindow => {
+                debug!("Starting drag on window {window_id}");
+                window::drag(window_id)
+            }
         }
     }
     pub fn view(&self) -> Element<'_, TitlebarMessage> {

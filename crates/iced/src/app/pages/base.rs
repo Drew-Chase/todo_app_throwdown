@@ -12,7 +12,7 @@ use iced::{
 };
 use std::result;
 use todo_commonlib::{TodoAppError, TodoList};
-use tracing::error;
+use tracing::{debug, error};
 
 #[derive(Default)]
 pub struct BasePage {
@@ -43,6 +43,7 @@ impl BasePage {
                 None => Task::none(),
             },
             BasePageMessage::UpdateList(list) => {
+                debug!("Todo list updated: {} items", list.list.len());
                 self.list = list;
                 Task::none()
             }

@@ -51,6 +51,10 @@ pub fn run() {
             commands::mark_item_as_undone,
             commands::delete_item
         ])
+        .setup(|_app| {
+            info!("Tauri application ready");
+            Ok(())
+        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

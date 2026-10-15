@@ -10,6 +10,7 @@ use iced::widget::{column, container, scrollable, stack};
 use iced::window::{Direction, Id, Level, Position};
 use iced::{Element, Fill, Padding, Size, Subscription, Task, window};
 use iced_borderless_window_resize_handle_widget::{ResizeHandles, drag_resize};
+use tracing::{debug, info};
 use todo_commonlib::TodoList;
 
 #[derive(Default)]
@@ -54,17 +55,25 @@ impl TodoApp {
                 None => Task::none(),
             },
             TodoAppMessage::WindowCreation(id) => {
+                info!("Window id acquired: {id:?}");
                 self.id = id;
                 Task::none()
             }
             TodoAppMessage::WindowStartResize(direction) => match self.id {
-                Some(id) => drag_resize(id, direction),
+                Some(id) => {
+                    debug!("Starting window resize: {direction:?}");
+                    drag_resize(id, direction)
+                }
                 None => Task::none(),
             },
             TodoAppMessage::WindowSizeChanged(id, _size) => {
+                debug!("Window {id} size changed");
                 window::is_maximized(id).map(TodoAppMessage::WindowMaximized)
             }
             TodoAppMessage::WindowMaximized(maximized) => {
+                if self.maximized != maximized {
+                    info!("Window maximized state changed: {maximized}");
+                }
                 self.maximized = maximized;
                 Task::none()
             }
