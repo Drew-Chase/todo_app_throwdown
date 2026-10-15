@@ -11,16 +11,17 @@ path = "./src/lib.rs"
 [dependencies]
 todo_commonlib = { path = "../shared" }
 iced = { version = "0.14", default-features = false, features = ["canvas", "advanced", "svg", "lazy", "sipper", "advanced-shaping", "web-colors", "crisp", "tiny-skia", "thread-pool", "x11", "wayland"] }
+iced_borderless_window_resize_handle_widget = { version = "0.1" }
 
 color-eyre = { workspace = true }
 tracing = { workspace = true }
 
-aurora_leaf = {path="../aurora_leaf"}
+aurora_leaf = { path = "../aurora_leaf" }
 
 
 [build-dependencies]
-chrono = { workspace = true}
-walkdir = {workspace = true}
+chrono = { workspace = true }
+walkdir = { workspace = true }
 
 [target.'cfg(windows)'.build-dependencies]
-winres = {workspace = true}
+winres = { workspace = true }

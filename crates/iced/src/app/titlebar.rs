@@ -4,14 +4,14 @@ use crate::app::theme::color;
 use crate::app::{TodoApp, TodoAppMessage};
 use aurora_leaf::Icon;
 use iced::widget::{Text, container, mouse_area, row};
-use iced::{window, Background, Element, Fill, Padding, Task};
+use iced::{Background, Element, Fill, Padding, Task, window};
 
 #[derive(Debug, Clone, Default)]
-pub struct Titlebar {}
+pub struct Titlebar;
 #[derive(Debug, Clone)]
 pub enum TitlebarMessage {
     Close,
-    ToggleMaximize,
+    ToggleMaximized,
     ToggleMinimize,
     StartDragWindow,
 }
@@ -23,7 +23,7 @@ impl Titlebar {
         window_id: window::Id,
     ) -> Task<TodoAppMessage> {
         match message {
-            TitlebarMessage::ToggleMaximize => window::toggle_maximize(window_id),
+            TitlebarMessage::ToggleMaximized => window::toggle_maximize(window_id),
             TitlebarMessage::ToggleMinimize => window::minimize(window_id, true),
             TitlebarMessage::Close => window::close(window_id),
             TitlebarMessage::StartDragWindow => window::drag(window_id),
@@ -41,6 +41,7 @@ impl Titlebar {
                 .width(Fill)
                 .height(Fill),
             ])
+            .on_double_click(TitlebarMessage::ToggleMaximized)
             .on_press(TitlebarMessage::StartDragWindow),
             IconButton::new(Icon::material_symbols().minimize_rounded())
                 .width(47)
@@ -52,7 +53,7 @@ impl Titlebar {
                 .icon_size(11.5)
                 .height(Fill)
                 .style(icon_button::SECONDARY_BUTTON_STYLE)
-                .on_press(TitlebarMessage::ToggleMaximize),
+                .on_press(TitlebarMessage::ToggleMaximized),
             IconButton::new(Icon::material_symbols().close_rounded())
                 .width(47)
                 .height(Fill)

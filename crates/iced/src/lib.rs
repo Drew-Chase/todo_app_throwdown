@@ -16,6 +16,7 @@ pub fn run() -> Result<()> {
         .theme(iced::Theme::Light)
         .font(FontFamily::roboto().bold())
         .font(FontFamily::roboto().regular())
+        .subscription(TodoApp::subscription)
         .style(|_app, _theme| iced::theme::Style {
             text_color: color::Text::DEFAULT,
             background_color: color::Surface::APPLICATION,
