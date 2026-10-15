@@ -1,12 +1,13 @@
 use crate::app::components::todo_composer::{TodoComposer, TodoComposerMessage};
+use crate::app::theme::utility::icon;
 use crate::app::{
     TodoAppMessage,
     theme::{color, fonts},
 };
-use iced::widget::{container, row, scrollable, space};
+use aurora_leaf::Icon;
 use iced::{
-    Border, Element, Fill, Task,
-    widget::{column, text},
+    Alignment, Border, Element, Fill, Task,
+    widget::{column, container, row, scrollable, space, text},
 };
 use todo_commonlib::{TodoAppError, TodoList};
 use tracing::{debug, error};
@@ -69,14 +70,38 @@ impl BasePage {
             self.input_form.view().map(BasePageMessage::InputForm),
             space().height(22),
             // Task List
-            container(scrollable(row![
-                
-            ]).width(Fill).height(Fill))
-                .height(184)
+            container(
+                scrollable(if self.list.list.is_empty() {
+                    container(
+                        column![
+                            icon(
+                                Icon::material_symbols().checklist_rounded(),
+                                48,
+                                Some((color::Surface::PRIMARY_DARK, color::Surface::PRIMARY_DARK))
+                            ),
+                            space().height(4),
+                            text!("All clear!"),
+                            space().height(4),
+                            text!("Add a task above to get started.")
+                        ]
+                        .width(Fill)
+                        .align_x(Alignment::Center),
+                    )
+                    .width(Fill)
+                    .height(Fill)
+                    .align_y(Alignment::Center)
+                    .align_x(Alignment::Center)
+                } else {
+                    container(row![])
+                })
                 .width(Fill)
-                .style(|_| container::Style::default()
-                    .background(color::Surface::CARD)
-                    .border(Border::default().rounded(28.0)))
+                .height(Fill)
+            )
+            .height(184)
+            .width(Fill)
+            .style(|_| container::Style::default()
+                .background(color::Surface::CARD)
+                .border(Border::default().rounded(28.0)))
         ]
         .into()
     }
