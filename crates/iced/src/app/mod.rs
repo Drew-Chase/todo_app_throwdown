@@ -20,7 +20,7 @@ pub struct TodoApp {
 pub enum TodoAppMessage {
     WindowCreation(Option<Id>),
     WindowStartResize(Direction),
-    WindowEndResize(Id, Size),
+    WindowSizeChanged(Id, Size),
     TitlebarMessage(TitlebarMessage),
     WindowMaximized(bool),
 }
@@ -56,7 +56,7 @@ impl TodoApp {
                 Some(id) => drag_resize(id, direction),
                 None => Task::none(),
             },
-            TodoAppMessage::WindowEndResize(id, _size) => {
+            TodoAppMessage::WindowSizeChanged(id, _size) => {
                 window::is_maximized(id).map(TodoAppMessage::WindowMaximized)
             }
             TodoAppMessage::WindowMaximized(maximized) => {
@@ -105,7 +105,7 @@ impl TodoApp {
 
     pub fn subscription(&self) -> Subscription<TodoAppMessage> {
         Subscription::batch([
-            window::resize_events().map(|(id, size)| TodoAppMessage::WindowEndResize(id, size))
+            window::resize_events().map(|(id, size)| TodoAppMessage::WindowSizeChanged(id, size))
         ])
     }
 
