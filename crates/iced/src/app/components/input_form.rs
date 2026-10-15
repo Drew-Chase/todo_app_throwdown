@@ -1,8 +1,9 @@
 use crate::app::components::icon_button::{IconButton, PRIMARY_BUTTON_STYLE};
 use crate::app::theme::color::{Surface, Text};
+use crate::app::theme::fonts;
 use aurora_leaf::Icon;
 use iced::widget::{column, container, row, space, text, text_input};
-use iced::{Background, Border, Color, Element, Fill, Padding};
+use iced::{Alignment, Background, Border, Color, Element, Fill, Padding};
 
 pub struct TodoSubmission {
     pub title: String,
@@ -49,6 +50,7 @@ impl InputForm {
             text_input("What needs doing?", &self.title)
                 .padding(Padding::new(8.0).left(4).right(4))
                 .size(18)
+                .font(fonts::Roboto::REGULAR)
                 .style(|_theme, status| {
                     let default = text_input::Style {
                         background: Background::Color(Color::TRANSPARENT),
@@ -77,6 +79,7 @@ impl InputForm {
             text_input("Add details (optional)", &self.description)
                 .padding(Padding::new(8.0).left(4).right(4))
                 .line_height(1.5)
+                .font(fonts::Roboto::REGULAR)
                 .size(14)
                 .style(|_theme, status| {
                     let default = text_input::Style {
@@ -105,6 +108,7 @@ impl InputForm {
                 text!("Press Enter to add")
                     .size(12)
                     .color(Text::PLACEHOLDER)
+                    .font(fonts::Roboto::REGULAR)
                     .width(Fill),
                 IconButton::new(Icon::material_symbols().add_rounded())
                     .style(PRIMARY_BUTTON_STYLE)
@@ -114,6 +118,7 @@ impl InputForm {
                     .height(40)
                     .radius(100)
             ]
+            .align_y(Alignment::Center)
         ])
         .padding(16)
         .height(184)
