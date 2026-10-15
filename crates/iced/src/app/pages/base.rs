@@ -5,7 +5,7 @@ use crate::app::{
 };
 use iced::widget::{container, row, scrollable, space};
 use iced::{
-    Border, Element, Fill, Task, Vector,
+    Border, Element, Fill, Task,
     widget::{column, text},
 };
 use todo_commonlib::{TodoAppError, TodoList};
@@ -22,7 +22,6 @@ pub enum BasePageMessage {
     UpdateList(TodoList),
     RefreshTodoList,
     Error(TodoAppError),
-    NoOp,
 }
 
 impl BasePage {
@@ -56,7 +55,6 @@ impl BasePage {
                 error!("{}", e);
                 Task::none()
             }
-            BasePageMessage::NoOp => Task::none(),
         }
     }
     pub fn view(&self) -> Element<'_, BasePageMessage> {

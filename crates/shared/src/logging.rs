@@ -344,14 +344,12 @@ impl Read for ProgressReader<'_> {
         let n = self.inner.read(buf)?;
         *self.processed += n as u64;
 
-        let percent = if self.total == 0 {
-            100
-        } else {
-            (*self.processed * 100 / self.total) as u8
-        };
-        if percent != *self.last_percent {
-            *self.last_percent = percent;
-            println!("log archive: compressing {} — {percent}%", self.label);
+        if let Some(percent) = (*self.processed * 100u64).checked_div(self.total) {
+            let percent = percent as u8;
+            if percent != *self.last_percent {
+                *self.last_percent = percent;
+                println!("log archive: compressing {} — {percent}%", self.label);
+            }
         }
         Ok(n)
     }

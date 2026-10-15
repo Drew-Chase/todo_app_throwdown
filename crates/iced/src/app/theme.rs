@@ -1,7 +1,8 @@
 pub mod color {
     use iced::{Color, Shadow, color};
 
-    // 0 1px 2px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.07)), 0 2px 6px 2px var(--tw-shadow-color, rgb(0 0 0 / 0.05))
+    // This will be reused once the issue is resolved regarding tiny-skia and shadows: https://github.com/iced-rs/iced/pull/3503
+    #[allow(unused)]
     pub const CARD_SHADOW: Shadow = Shadow {
         offset: iced::Vector::new(0.0, 2.0),
         color: Color::from_rgba8(0x00, 0x00, 0x00, 0.07),
@@ -91,20 +92,5 @@ pub mod utility {
                 }),
             })
             .into()
-    }
-
-    pub fn alpha(color: Color, alpha: f32) -> Color {
-        Color { a: alpha, ..color }
-    }
-}
-
-pub trait ColorExt {
-    fn alpha(self, alpha: f32) -> Self;
-}
-
-impl ColorExt for iced::Color {
-    fn alpha(mut self, alpha: f32) -> Self {
-        self.a = alpha;
-        self
     }
 }
