@@ -21,3 +21,7 @@ build-tauri:
 dist: build
     @New-Item -Path .\target\dist -Type Directory -Force
     @Copy-Item .\target\release\*.exe .\target\dist\
+[linux]
+dist:build
+    mkdir -p ./target/dist
+    find target/release -maxdepth 1 -type f -executable -exec cp -t target/dist {} +
