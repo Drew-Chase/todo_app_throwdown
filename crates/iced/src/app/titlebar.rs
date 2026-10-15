@@ -43,42 +43,47 @@ impl Titlebar {
         }
     }
     pub fn view(&self) -> Element<'_, TitlebarMessage> {
-        container(row![
-            mouse_area(row![
-                container(
-                    Text::new(TodoApp::TITLE)
-                        .size(18)
-                        .font(crate::app::theme::fonts::Roboto::BOLD)
-                )
-                .padding(Padding::new(0.0).left(8).right(8).top(4))
-                .width(Fill)
-                .height(Fill),
+        #[cfg(windows)]
+        {
+            container(row![
+                mouse_area(row![
+                    container(
+                        Text::new(TodoApp::TITLE)
+                            .size(18)
+                            .font(crate::app::theme::fonts::Roboto::BOLD)
+                    )
+                    .padding(Padding::new(0.0).left(8).right(8).top(4))
+                    .width(Fill)
+                    .height(Fill),
+                ])
+                .on_double_click(TitlebarMessage::ToggleMaximized)
+                .on_press(TitlebarMessage::StartDragWindow),
+                IconButton::new(Icon::material_symbols().minimize_rounded())
+                    .width(47)
+                    .height(Fill)
+                    .style(icon_button::SECONDARY_BUTTON_STYLE)
+                    .on_press(TitlebarMessage::ToggleMinimize),
+                IconButton::new(Icon::material_symbols().square_outline_rounded())
+                    .width(47)
+                    .icon_size(11.5)
+                    .height(Fill)
+                    .style(icon_button::SECONDARY_BUTTON_STYLE)
+                    .on_press(TitlebarMessage::ToggleMaximized),
+                IconButton::new(Icon::material_symbols().close_rounded())
+                    .width(47)
+                    .height(Fill)
+                    .style(icon_button::DANGER_BUTTON_STYLE)
+                    .on_press(TitlebarMessage::Close)
             ])
-            .on_double_click(TitlebarMessage::ToggleMaximized)
-            .on_press(TitlebarMessage::StartDragWindow),
-            IconButton::new(Icon::material_symbols().minimize_rounded())
-                .width(47)
-                .height(Fill)
-                .style(icon_button::SECONDARY_BUTTON_STYLE)
-                .on_press(TitlebarMessage::ToggleMinimize),
-            IconButton::new(Icon::material_symbols().square_outline_rounded())
-                .width(47)
-                .icon_size(11.5)
-                .height(Fill)
-                .style(icon_button::SECONDARY_BUTTON_STYLE)
-                .on_press(TitlebarMessage::ToggleMaximized),
-            IconButton::new(Icon::material_symbols().close_rounded())
-                .width(47)
-                .height(Fill)
-                .style(icon_button::DANGER_BUTTON_STYLE)
-                .on_press(TitlebarMessage::Close)
-        ])
-        .width(Fill)
-        .height(32)
-        .style(|_| container::Style {
-            background: Some(Background::from(color::Surface::TITLEBAR)),
-            ..Default::default()
-        })
-        .into()
+            .width(Fill)
+            .height(32)
+            .style(|_| container::Style {
+                background: Some(Background::from(color::Surface::TITLEBAR)),
+                ..Default::default()
+            })
+            .into()
+        }
+        #[cfg(not(target_os = "windows"))]
+        row![].into()
     }
 }

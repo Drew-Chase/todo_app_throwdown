@@ -27,6 +27,7 @@ const HAS_NATIVE_CHROME: boolean = IS_MACOS || IS_LINUX;
 export default function WindowChrome()
 {
     const appWindow = getCurrentWindow();
+    if (HAS_NATIVE_CHROME) return null;
     return (
         <div
             className={
@@ -40,13 +41,9 @@ export default function WindowChrome()
             </div>
             <div className={"flex flex-row ml-auto"}>
                 <ButtonGroup className={"h-8"} variant={"tertiary"}>
-                    {!HAS_NATIVE_CHROME && (
-                        <>
-                            <Button key={"application-minimize-window-button"} variant={"tertiary"} className={"min-w-0 h-8 rounded-none text-[1rem] bg-transparent hover:bg-gray-200"} onPress={() => appWindow.minimize()}><Icon icon="material-symbols:minimize-rounded"/></Button>
-                            <Button key={"application-maximize-window-button"} variant={"tertiary"} className={"min-w-0 h-8 rounded-none text-[.7rem] bg-transparent hover:bg-gray-200"} onPress={() => appWindow.toggleMaximize()}><Icon icon="material-symbols:square-outline-rounded"/></Button>
-                            <Button key={"application-close-window-button"} variant={"danger-soft"} className={"min-w-0 h-8 rounded-none text-[1rem] bg-transparent hover:bg-danger hover:text-white"} onPress={() => appWindow.close()}><Icon icon="material-symbols:close-rounded"/></Button>
-                        </>
-                    )}
+                    <Button key={"application-minimize-window-button"} variant={"tertiary"} className={"min-w-0 h-8 rounded-none text-[1rem] bg-transparent hover:bg-gray-200"} onPress={() => appWindow.minimize()}><Icon icon="material-symbols:minimize-rounded"/></Button>
+                    <Button key={"application-maximize-window-button"} variant={"tertiary"} className={"min-w-0 h-8 rounded-none text-[.7rem] bg-transparent hover:bg-gray-200"} onPress={() => appWindow.toggleMaximize()}><Icon icon="material-symbols:square-outline-rounded"/></Button>
+                    <Button key={"application-close-window-button"} variant={"danger-soft"} className={"min-w-0 h-8 rounded-none text-[1rem] bg-transparent hover:bg-danger hover:text-white"} onPress={() => appWindow.close()}><Icon icon="material-symbols:close-rounded"/></Button>
                 </ButtonGroup>
             </div>
         </div>
