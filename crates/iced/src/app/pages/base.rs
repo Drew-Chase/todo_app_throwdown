@@ -7,7 +7,7 @@ use crate::app::{
 use aurora_leaf::Icon;
 use iced::{
     Alignment, Border, Element, Fill, Task,
-    widget::{column, container, row, scrollable, space, text},
+    widget::{column, container, scrollable, space, text},
 };
 use todo_commonlib::{TodoAppError, TodoList};
 use tracing::{debug, error};
@@ -74,15 +74,20 @@ impl BasePage {
                 scrollable(if self.list.list.is_empty() {
                     container(
                         column![
+                            space().height(40),
                             icon(
                                 Icon::material_symbols().checklist_rounded(),
                                 48,
                                 Some((color::Surface::PRIMARY_DARK, color::Surface::PRIMARY_DARK))
                             ),
-                            space().height(4),
-                            text!("All clear!"),
+                            space().height(12),
+                            text!("All clear!").font(fonts::Roboto::MEDIUM).size(16),
                             space().height(4),
                             text!("Add a task above to get started.")
+                                .font(fonts::Roboto::REGULAR)
+                                .color(color::Text::MUTED)
+                                .size(14),
+                            space().height(40),
                         ]
                         .width(Fill)
                         .align_x(Alignment::Center),
@@ -92,7 +97,7 @@ impl BasePage {
                     .align_y(Alignment::Center)
                     .align_x(Alignment::Center)
                 } else {
-                    container(row![])
+                    container(column![])
                 })
                 .width(Fill)
                 .height(Fill)
