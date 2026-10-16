@@ -2,7 +2,7 @@ use crate::app::components::icon_button::{IconButton, PRIMARY_BUTTON_STYLE};
 use crate::app::theme::color::{Surface, Text};
 use crate::app::theme::fonts;
 use aurora_leaf::Icon;
-use iced::widget::{column, container, row, space, text, text_input};
+use iced::widget::{column, container, row, space, text, text_editor, text_input};
 use iced::{Alignment, Background, Border, Color, Element, Fill, Padding};
 
 pub struct TodoSubmission {
@@ -12,13 +12,13 @@ pub struct TodoSubmission {
 #[derive(Default)]
 pub struct TodoComposer {
     title: String,
-    description: String,
+    description: text_editor::Content,
 }
 
 #[derive(Debug, Clone)]
 pub enum TodoComposerMessage {
     TitleChanged(String),
-    DescriptionChanged(String),
+    DescriptionChanged(text_editor::Action),
     SubmitRequested,
 }
 
@@ -30,16 +30,16 @@ impl TodoComposer {
                 None
             }
             TodoComposerMessage::DescriptionChanged(value) => {
-                self.description = value;
+                self.description.perform(value);
                 None
             }
             TodoComposerMessage::SubmitRequested => {
                 let submission = TodoSubmission {
                     title: std::mem::take(&mut self.title),
-                    description: std::mem::take(&mut self.description),
+                    description: std::mem::take(&mut self.description.text()),
                 };
                 self.title = String::new();
-                self.description = String::new();
+                self.description = text_editor::Content::default();
                 Some(submission)
             }
         }
@@ -76,33 +76,33 @@ impl TodoComposer {
                 .on_submit(TodoComposerMessage::SubmitRequested)
                 .width(Fill),
             space().height(4),
-            text_input("Add details (optional)", &self.description)
+            text_editor(&self.description)
+                .placeholder("Add details (optional)")
                 .padding(Padding::new(8.0).left(4).right(4))
                 .line_height(1.5)
                 .font(fonts::Roboto::REGULAR)
                 .size(14)
+                .height(60)
                 .style(|_theme, status| {
-                    let default = text_input::Style {
+                    let default = text_editor::Style {
                         background: Background::Color(Color::TRANSPARENT),
                         border: Border::default()
                             .color(Color::TRANSPARENT)
                             .width(2)
                             .rounded(8),
-                        icon: Default::default(),
                         placeholder: Text::PLACEHOLDER,
                         value: Text::DEFAULT,
                         selection: Surface::PRIMARY_DARK,
                     };
                     match status {
-                        text_input::Status::Focused { .. } => text_input::Style {
+                        text_editor::Status::Focused { .. } => text_editor::Style {
                             border: default.border.color(Surface::PRIMARY),
                             ..default
                         },
                         _ => default,
                     }
                 })
-                .on_input(TodoComposerMessage::DescriptionChanged)
-                .on_submit(TodoComposerMessage::SubmitRequested),
+                .on_action(TodoComposerMessage::DescriptionChanged),
             space().height(Fill),
             row![
                 text!("Press Enter to add")
