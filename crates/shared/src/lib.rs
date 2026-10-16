@@ -1,6 +1,5 @@
 pub mod logging;
 
-use sqlx::sqlite::SqliteJournalMode;
 use sqlx::{AssertSqlSafe, ConnectOptions, Connection, Executor, SqlSafeStr, Statement};
 use std::path::Path;
 use tracing::{debug, info};
@@ -182,7 +181,6 @@ async fn open() -> Result<sqlx::sqlite::SqliteConnection, TodoAppError> {
     debug!("Opening todo database at '{}'", file.display());
     let options = sqlx::sqlite::SqliteConnectOptions::new()
         .filename(file)
-        .journal_mode(SqliteJournalMode::Wal)
         .disable_statement_logging()
         .create_if_missing(true);
     Ok(options.connect().await?)
