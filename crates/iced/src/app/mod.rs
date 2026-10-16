@@ -43,13 +43,13 @@ impl TodoApp {
 
     pub fn boot() -> (Self, Task<TodoAppMessage>) {
         let id = window::latest();
-        _ = TodoList::initialize(); // We don't need to wait for this to finish
         let app = Self { ..Self::default() };
         (
             app,
             Task::batch([
                 id.map(TodoAppMessage::WindowCreation),
-                Task::future(TodoList::initialize()).map(|_| TodoAppMessage::NoOp),
+                Task::future(TodoList::initialize())
+                    .map(|_| TodoAppMessage::BasePageMessage(BasePageMessage::RefreshTodoList)),
             ]),
         )
     }
