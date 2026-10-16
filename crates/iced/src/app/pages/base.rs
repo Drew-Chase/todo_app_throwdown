@@ -5,11 +5,12 @@ use crate::app::{
     theme::{color, fonts},
 };
 use aurora_leaf::Icon;
+use iced::widget::row;
 use iced::{
     Alignment, Border, Element, Fill, Task,
     widget::{column, container, scrollable, space, text},
 };
-use todo_commonlib::{TodoAppError, TodoList};
+use todo_commonlib::{TodoAppError, TodoItem, TodoList};
 use tracing::{debug, error};
 
 #[derive(Default)]
@@ -70,44 +71,65 @@ impl BasePage {
             self.input_form.view().map(BasePageMessage::InputForm),
             space().height(22),
             // Task List
-            container(
-                scrollable(if self.list.list.is_empty() {
-                    container(
-                        column![
-                            space().height(40),
-                            icon(
-                                Icon::material_symbols().checklist_rounded(),
-                                48,
-                                Some((color::Surface::PRIMARY_DARK, color::Surface::PRIMARY_DARK))
-                            ),
-                            space().height(12),
-                            text!("All clear!").font(fonts::Roboto::MEDIUM).size(16),
-                            space().height(4),
-                            text!("Add a task above to get started.")
-                                .font(fonts::Roboto::REGULAR)
-                                .color(color::Text::MUTED)
-                                .size(14),
-                            space().height(40),
-                        ]
-                        .width(Fill)
-                        .align_x(Alignment::Center),
-                    )
+            scrollable(if self.list.list.is_empty() {
+                container(
+                    column![
+                        space().height(40),
+                        icon(
+                            Icon::material_symbols().checklist_rounded(),
+                            48,
+                            Some((color::Surface::PRIMARY_DARK, color::Surface::PRIMARY_DARK))
+                        ),
+                        space().height(12),
+                        text!("All clear!").font(fonts::Roboto::MEDIUM).size(16),
+                        space().height(7),
+                        text!("Add a task above to get started.")
+                            .font(fonts::Roboto::REGULAR)
+                            .color(color::Text::MUTED)
+                            .size(14),
+                        space().height(40),
+                    ]
                     .width(Fill)
-                    .height(Fill)
-                    .align_y(Alignment::Center)
-                    .align_x(Alignment::Center)
-                } else {
-                    container(column![])
-                })
+                    .align_x(Alignment::Center),
+                )
+                .height(188)
                 .width(Fill)
-                .height(Fill)
-            )
-            .height(184)
+                .style(|_| {
+                    container::Style::default()
+                        .background(color::Surface::CARD)
+                        .border(Border::default().rounded(28.0))
+                })
+                .align_y(Alignment::Center)
+                .align_x(Alignment::Center)
+            } else {
+                container(column(
+                    self.list.list.iter().map(|item| self.task_item(item)),
+                ))
+            })
             .width(Fill)
-            .style(|_| container::Style::default()
-                .background(color::Surface::CARD)
-                .border(Border::default().rounded(28.0)))
+            .height(Fill)
         ]
+        .into()
+    }
+    pub fn task_item(&self, item: &TodoItem) -> Element<'_, BasePageMessage> {
+        column![
+            container(row![column![
+                text!("{}", item.title).font(fonts::Roboto::MEDIUM).size(16),
+                text!("{}", item.description)
+                    .font(fonts::Roboto::REGULAR)
+                    .size(14)
+                    .color(color::Text::MUTED),
+            ]])
+            .style(|_| {
+                container::Style::default()
+                    .background(color::Surface::CARD)
+                    .border(Border::default().rounded(28))
+            })
+            .width(Fill)
+            .padding(16),
+            space().height(12),
+        ]
+        .width(Fill)
         .into()
     }
 }
