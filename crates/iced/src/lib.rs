@@ -15,6 +15,7 @@ pub fn run() -> Result<()> {
         .centered()
         .theme(iced::Theme::Light)
         .font(FontFamily::roboto().bold())
+        .font(FontFamily::roboto().medium())
         .font(FontFamily::roboto().regular())
         .subscription(TodoApp::subscription)
         .style(|_app, _theme| iced::theme::Style {

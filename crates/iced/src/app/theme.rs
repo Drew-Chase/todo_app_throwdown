@@ -13,6 +13,7 @@ pub mod color {
 
     impl Text {
         pub const DEFAULT: Color = color!(0x18181b);
+        pub const MUTED: Color = color!(0x87878e);
         pub const PLACEHOLDER: Color = color!(0x8e8e95);
     }
 
@@ -62,6 +63,11 @@ pub mod fonts {
         pub const BOLD: Font = Font {
             family: Family::Name("Roboto"),
             weight: Weight::Bold,
+            ..Font::DEFAULT
+        };
+        pub const MEDIUM: Font = Font {
+            family: Family::Name("Roboto"),
+            weight: Weight::Medium,
             ..Font::DEFAULT
         };
         pub const REGULAR: Font = Font {
