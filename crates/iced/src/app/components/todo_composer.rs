@@ -57,7 +57,7 @@ impl TodoComposer {
                         border: Border::default()
                             .color(Color::TRANSPARENT)
                             .width(2)
-                            .rounded(8),
+                            .rounded(12),
                         icon: Default::default(),
                         placeholder: Text::PLACEHOLDER,
                         value: Text::DEFAULT,
@@ -89,7 +89,7 @@ impl TodoComposer {
                         border: Border::default()
                             .color(Color::TRANSPARENT)
                             .width(2)
-                            .rounded(8),
+                            .rounded(12),
                         placeholder: Text::PLACEHOLDER,
                         value: Text::DEFAULT,
                         selection: Surface::PRIMARY_DARK,
