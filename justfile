@@ -19,9 +19,9 @@ build-tauri:
 
 [windows]
 dist: build
-    @New-Item -Path .\target\dist -Type Directory -Force
-    @Copy-Item .\target\release\*.exe .\target\dist\
+    @New-Item -Path ./target/dist -Type Directory -Force
+    @Copy-Item ./target/release/*.exe ./target/dist/
 [linux]
 dist:build
     mkdir -p ./target/dist
-    find target/release -maxdepth 1 -type f -executable -exec cp -t target/dist {} +
+    cp ./target/release/egui_todo_app ./target/release/gpui_todo_app ./target/release/iced_todo_app ./target/release/tauri_todo_app ./target/dist/
