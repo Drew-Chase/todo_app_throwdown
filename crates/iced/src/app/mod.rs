@@ -29,7 +29,6 @@ pub enum TodoAppMessage {
     TitlebarMessage(TitlebarMessage),
     BasePageMessage(BasePageMessage),
     WindowMaximized(bool),
-    NoOp,
 }
 
 impl TodoApp {
@@ -84,7 +83,6 @@ impl TodoApp {
                 Task::none()
             }
             TodoAppMessage::BasePageMessage(message) => self.base_page.update(message),
-            TodoAppMessage::NoOp => Task::none(),
         }
     }
 
