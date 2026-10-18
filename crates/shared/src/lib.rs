@@ -12,14 +12,14 @@ pub enum TodoAppError {
     IOError(#[from] std::io::Error),
 }
 
-#[derive(sqlx::FromRow, Debug, serde::Serialize, serde::Deserialize)]
+#[derive(sqlx::FromRow, Debug, serde::Serialize, serde::Deserialize, Clone)]
 pub struct TodoItem {
     pub id: i64,
     pub title: String,
     pub description: String,
     pub done: bool,
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize, Default)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, Default, Clone)]
 pub struct TodoList {
     pub list: Vec<TodoItem>,
 }
