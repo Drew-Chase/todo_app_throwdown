@@ -149,7 +149,7 @@ impl TodoApp {
                 fullsize_content_view: true,
             },
             #[cfg(target_os = "linux")]
-            platform_specific: iced::window::settings::PlatformSpecific {
+            platform_specific: window::settings::PlatformSpecific {
                 #[cfg(debug_assertions)]
                 application_id: String::from("todo_app-dev"),
                 #[cfg(not(debug_assertions))]

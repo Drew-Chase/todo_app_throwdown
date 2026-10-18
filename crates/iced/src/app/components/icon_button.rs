@@ -58,14 +58,14 @@ pub struct IconButtonState {
 }
 
 pub struct IconButtonStyle {
-    foreground: Color,
-    background: Color,
-    foreground_hover: Color,
-    background_hover: Color,
-    background_disabled: Color,
-    foreground_disabled: Color,
-    background_pressed: Color,
-    foreground_pressed: Color,
+    pub foreground: Color,
+    pub background: Color,
+    pub foreground_hover: Color,
+    pub background_hover: Color,
+    pub background_disabled: Color,
+    pub foreground_disabled: Color,
+    pub background_pressed: Color,
+    pub foreground_pressed: Color,
 }
 
 impl<Message> Default for IconButton<Message> {
@@ -102,6 +102,11 @@ impl<Message> IconButton<Message> {
     }
     pub fn height(mut self, height: impl Into<Length>) -> Self {
         self.height = height.into();
+        self
+    }
+    pub fn size(mut self, size: impl Into<Length>) -> Self {
+        self.width = size.into();
+        self.height = self.width;
         self
     }
     pub fn icon_size(mut self, icon_size: impl Into<Length>) -> Self {
