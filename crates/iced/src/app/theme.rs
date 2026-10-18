@@ -21,6 +21,7 @@ pub mod color {
     impl Surface {
         pub const APPLICATION: Color = color!(0xe3e3ea);
         pub const CARD: Color = color!(0xffffff);
+        #[cfg(windows)]
         pub const TITLEBAR: Color = color!(0xf3f4f6);
         pub const PRIMARY_DARK: Color = color!(0xaa3b3f);
         pub const PRIMARY: Color = color!(0xf13848);
@@ -44,7 +45,9 @@ pub mod color {
             pub const BACKGROUND_HOVER: Color = color!(0xe5e7eb);
         }
 
+        #[cfg(windows)]
         pub struct Danger;
+        #[cfg(windows)]
         impl Danger {
             pub const FOREGROUND: Color = color!(0xa43a37);
             pub const FOREGROUND_HOVER: Color = Color::WHITE;
