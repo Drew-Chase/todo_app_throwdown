@@ -4,3 +4,8 @@ mod internal {
 }
 
 pub use crate::internal::{FontFamily, Icon};
+
+
+pub fn test(){
+    println!("{}", Icon::lucide().map());
+}
