@@ -3,8 +3,18 @@ name = "gpui_todo_app"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+name = "gpui_todo_app_lib"
+path = "src/lib.rs"
+
 [dependencies]
+gpui = { version = "0.2" }
+
 todo_commonlib = { path = "../shared" }
+
+color-eyre = { workspace = true }
+tracing-subscriber = { workspace = true }
+tracing = { workspace = true }
 
 [build-dependencies]
 chrono = { workspace = true }

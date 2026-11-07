@@ -11,6 +11,9 @@ tauri:
 iced:
     @cargo run --profile dev --package iced_todo_app
 
+gpui:
+    @cargo run --profile dev --package gpui_todo_app
+
 build: build-tauri
     @cargo build --release
 
