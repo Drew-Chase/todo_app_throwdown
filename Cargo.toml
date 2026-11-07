@@ -21,4 +21,4 @@ codegen-units = 1
 panic = "abort"
 opt-level = "z"
 debug-assertions = false
-strip = "symbols"
+strip = true
