@@ -29,7 +29,7 @@ serde_json = "1"
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
 color-eyre = { workspace = true }
-todo_commonlib = { path = "../../shared" }
+todo_commonlib = { path = "../../../crates/shared" }
 
 chrono = { version = "0.4.45" }
 tar = "0.4.43"

@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-todo_commonlib = { path = "../shared" }
+todo_commonlib = { path = "../../crates/shared" }
 
 [build-dependencies]
 chrono = { workspace = true }
