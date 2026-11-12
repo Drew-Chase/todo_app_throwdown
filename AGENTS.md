@@ -33,7 +33,7 @@ You **may** write:
 - **Logs / log messages**
 - **Tests**
 - **Commit messages**
-- **Small code examples** - These code snippets shouldn't share any code with the project and be genaric to illistrate the solution.
+- **Small code examples** - These code snippets shouldn't share any code with the project and be generic to illustrate the solution.
 
 If a request would require writing source code, explain how it could be done and point to the relevant files, functions, and types instead of writing the code yourself.
 
