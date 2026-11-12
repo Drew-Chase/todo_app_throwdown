@@ -1,4 +1,5 @@
 pub mod logging;
+mod c_extern;
 
 use sqlx::{AssertSqlSafe, ConnectOptions, Connection, Executor, SqlSafeStr, Statement};
 use std::path::Path;
@@ -174,6 +175,8 @@ impl TodoItem {
         TodoList::mark_undone(self.id).await
     }
 }
+
+
 async fn open() -> Result<sqlx::sqlite::SqliteConnection, TodoAppError> {
     let current_exe = std::env::current_exe()?;
     let parent = current_exe.parent().unwrap_or(Path::new(""));
