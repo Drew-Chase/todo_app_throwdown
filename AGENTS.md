@@ -97,6 +97,8 @@ You may create commits. When you do, follow this rule exactly:
 
 Do not add "Co-Authored-By", "Generated with", or any other AI attribution to commit messages — write only the message content.
 
+Always commit directly to `master`. Never create a new branch for commits. If the working tree is on another branch, switch to `master` before committing. Only merge other branches when the user explicitly asks. Do not push unless the user asks.
+
 ## Agent Memory
 
 Update your persistent agent memory as you discover codepaths, dependency relationships, architectural patterns, platform-specific implementations, and performance-critical sections. This builds institutional knowledge across conversations. Write concise notes about what you found and where.
