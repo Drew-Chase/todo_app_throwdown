@@ -5,18 +5,22 @@
 #include <string>
 
 
-struct m_TodoItem {
-    std::int64_t id;
-    const char* title;
-    const std::size_t title_len;
-    const char* description;
-    const std::size_t description_len;
-    bool done;
-};
+namespace {
+    struct m_TodoItem {
+        std::int64_t id;
+        const char *title;
+        const std::size_t title_len;
+        const char *description;
+        const std::size_t description_len;
+        bool done;
+    };
+}
 
 extern "C" std::int32_t todo_initialize(std::uint8_t *error, std::size_t *error_len);
 
 extern "C" const m_TodoItem *get_list(std::size_t *size, std::uint8_t *error, std::size_t *error_len);
+
+extern "C" void free_get_list(const m_TodoItem *items, std::size_t size);
 
 
 void TodoList::initialize() {
@@ -41,11 +45,28 @@ std::vector<TodoItem> TodoList::get() {
         const std::string error_str(reinterpret_cast<const char *>(err_buf), err_len);
         throw std::runtime_error(error_str);
     }
+
+    class ListGuard {
+    public:
+        const m_TodoItem *data;
+        std::size_t size;
+
+        explicit ListGuard(const m_TodoItem *data, const std::size_t size) : data(data), size(size) {
+        }
+
+        ListGuard(const ListGuard &) = delete;
+
+        ListGuard & operator=(const ListGuard &) = delete;
+
+        ~ListGuard() { free_get_list(data, size); }
+    };
+    ListGuard item{items, list_size};
+
     static_assert(sizeof(m_TodoItem) == 48);
     std::vector<TodoItem> list;
-    list.reserve(list_size);
-    for (std::size_t i = 0; i < list_size; ++i) {
-        auto [id, title, title_len, description, description_len, done] = items[i];
+    list.reserve(item.size);
+    for (std::size_t i = 0; i < item.size; ++i) {
+        auto [id, title, title_len, description, description_len, done] = item.data[i];
         list.emplace_back(id, std::string(title, title_len), std::string(description, description_len), done);
     }
     return list;

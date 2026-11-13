@@ -5,12 +5,20 @@
 
 class TodoItem {
 public:
-   std::int64_t id;
+    std::int64_t id;
     std::string title;
     std::string description;
     bool done;
 
-    TodoItem(std::int64_t id, std::string title, std::string description, bool done) : id(id), title(std::move(title)), description(std::move(description)), done(done) {
+    TodoItem(
+        const std::int64_t id,
+        std::string title,
+        std::string description,
+        const bool done
+    ) : id(id),
+        title(std::move(title)),
+        description(std::move(description)),
+        done(done) {
     }
 
     static TodoItem get(std::int64_t id);
