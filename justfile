@@ -17,6 +17,7 @@ gpui:
 build: build-tauri
     @cargo build --release
 
+[working-directory: "./apps/rust/tauri"]
 build-tauri:
     @cargo tauri build --no-bundle
 
