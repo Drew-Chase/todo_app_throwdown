@@ -23,7 +23,7 @@ fn generate_icon() {
     #[cfg(windows)]
     {
         let mut res = winres::WindowsResource::new();
-        res.set_icon("../../res/icons/icon.ico");
+        res.set_icon("../../../res/icons/icon.ico");
         res.set("ProductName", "Iced Todo App");
         res.compile().expect("Failed to compile resource");
     }

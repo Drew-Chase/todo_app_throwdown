@@ -4,7 +4,7 @@ set shell := ["bash", "-c"]
 @default:
     just --list
 
-[working-directory("crates/tauri")]
+[working-directory("apps/rust/tauri")]
 tauri:
     @just dev
 

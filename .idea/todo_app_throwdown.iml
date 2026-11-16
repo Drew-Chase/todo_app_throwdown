@@ -6,13 +6,13 @@
       <sourceFolder url="file://$MODULE_DIR$/crates/shared/examples" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/shared/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/crates/aurora_leaf/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/apps/egui/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/apps/gpui/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/apps/iced/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/apps/tauri/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/apps/tauri/src-tauri/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/rust/egui/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/rust/gpui/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/rust/iced/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/rust/tauri/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/apps/rust/tauri/src-tauri/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
-      <excludeFolder url="file://$MODULE_DIR$/apps/tauri/src-tauri/gen/schemas" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/rust/tauri/src-tauri/gen/schemas" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
