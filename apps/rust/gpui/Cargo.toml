@@ -9,9 +9,9 @@ path = "src/lib.rs"
 
 [dependencies]
 gpui = { version = "0.2" }
+todo_commonlib = {workspace = true}
 
-todo_commonlib = { path = "../../../crates/shared" }
-
+tokio = { workspace = true }
 color-eyre = { workspace = true }
 tracing-subscriber = { workspace = true }
 tracing = { workspace = true }

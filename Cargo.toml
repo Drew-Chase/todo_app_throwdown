@@ -7,6 +7,8 @@ default-members = ["crates/shared", "apps/rust/egui", 'apps/rust/gpui', "apps/ru
 tracing = { version = "0.1", features = ["max_level_trace"] }
 tracing-subscriber = { version = "0.3", features = ["json", "env-filter"] }
 color-eyre = { version = "0.6.5", features = ["tracing-error", "track-caller"] }
+tokio = { version = "1.53.1", features = ["macros", "rt", "rt-multi-thread"] }
+todo_commonlib = { path = "crates/shared" }
 
 # Windows Specific
 winres = { version = "0.1.12" }
