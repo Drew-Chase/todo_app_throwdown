@@ -1,4 +1,5 @@
 mod app;
+mod aurora;
 
 use color_eyre::{Result, eyre::eyre};
 use gpui::{

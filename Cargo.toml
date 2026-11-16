@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/shared", "apps/rust/egui", 'apps/rust/gpui', "apps/rust/iced", "apps/rust/tauri/src-tauri", "crates/aurora_leaf"]
+members = ["crates/shared", "apps/rust/egui", 'apps/rust/gpui', "apps/rust/iced", "apps/rust/tauri/src-tauri"]
 default-members = ["crates/shared", "apps/rust/egui", 'apps/rust/gpui', "apps/rust/iced"]
 
 [workspace.dependencies]
@@ -9,6 +9,8 @@ tracing-subscriber = { version = "0.3", features = ["json", "env-filter"] }
 color-eyre = { version = "0.6.5", features = ["tracing-error", "track-caller"] }
 tokio = { version = "1.53.1", features = ["macros", "rt", "rt-multi-thread"] }
 todo_commonlib = { path = "crates/shared" }
+aurora_fonts = { version = "0.1" }
+aurora_iconify = { version = "0.3.0" }
 
 # Windows Specific
 winres = { version = "0.1.12" }

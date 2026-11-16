@@ -8,7 +8,7 @@ use crate::app::components::icon_button::IconButton;
 #[cfg(windows)]
 use crate::app::theme::color;
 #[cfg(windows)]
-use aurora_leaf::Icon;
+use crate::Icon;
 use iced::widget::row;
 #[cfg(windows)]
 use iced::widget::{Text, container, mouse_area};

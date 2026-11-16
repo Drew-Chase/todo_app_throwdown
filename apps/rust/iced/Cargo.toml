@@ -16,9 +16,8 @@ iced_borderless_window_resize_handle_widget = { version = "0.1" }
 color-eyre = { workspace = true }
 tokio = { workspace = true }
 tracing = { workspace = true }
-
-aurora_leaf = { path = "../../../crates/aurora_leaf" }
-
+aurora_fonts = { workspace = true }
+aurora_iconify = { workspace = true }
 
 [build-dependencies]
 chrono = { workspace = true }

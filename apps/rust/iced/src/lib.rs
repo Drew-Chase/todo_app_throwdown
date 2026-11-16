@@ -1,9 +1,10 @@
 mod app;
+mod aurora;
 mod math;
 
 use crate::app::TodoApp;
+use crate::aurora::{FontFamily, Icon};
 use app::theme::color;
-use aurora_leaf::FontFamily;
 use color_eyre::Result;
 use tracing::info;
 

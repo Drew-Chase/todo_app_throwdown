@@ -1,9 +1,9 @@
 use crate::app::components::icon_button::{IconButton, PRIMARY_BUTTON_STYLE};
 use crate::app::theme::color::{Surface, Text};
 use crate::app::theme::fonts;
-use aurora_leaf::Icon;
 use iced::widget::{column, container, row, space, text, text_editor, text_input};
 use iced::{Alignment, Background, Border, Color, Element, Fill, Padding};
+use crate::aurora::Icon;
 
 pub struct TodoSubmission {
     pub title: String,

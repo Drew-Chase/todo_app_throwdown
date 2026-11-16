@@ -10,6 +10,8 @@ path = "src/lib.rs"
 [dependencies]
 gpui = { version = "0.2" }
 todo_commonlib = {workspace = true}
+aurora_fonts = { workspace = true }
+aurora_iconify = { workspace = true }
 
 tokio = { workspace = true }
 color-eyre = { workspace = true }

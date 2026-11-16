@@ -6,7 +6,7 @@ use crate::app::{
     TodoAppMessage,
     theme::{color, fonts},
 };
-use aurora_leaf::Icon;
+use crate::Icon;
 use iced::widget::checkbox::Status;
 use iced::widget::{checkbox, mouse_area, rich_text, row, span};
 use iced::{color, never, widget::{column, container, scrollable, space, text}, Alignment, Border, Color, Element, Fill, Padding, Task};
