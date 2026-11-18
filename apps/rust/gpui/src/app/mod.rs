@@ -1,3 +1,5 @@
+pub mod titlebar;
+
 use gpui::{div, Context, IntoElement, ParentElement, Render, SharedString, Styled, Window, rgb};
 
 pub struct App {
@@ -16,6 +18,6 @@ impl Render for App {
             .shadow_lg()
             .text_2xl()
             .size_full()
-            .child(format!("Hello, {}!", &self.text))
+            .child(format!("Hello, {}!", self.text))
     }
 }
