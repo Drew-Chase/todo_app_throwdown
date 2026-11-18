@@ -1,3 +1,2 @@
 [env]
 ICONIFY_API_URL="https://iconify.dclabs.app"
-#RUST_MIN_STACK = "67108864"
