@@ -10,7 +10,7 @@ color-eyre = { version = "0.6.5", features = ["tracing-error", "track-caller"] }
 tokio = { version = "1.53.1", features = ["macros", "rt", "rt-multi-thread"] }
 todo_commonlib = { path = "crates/shared" }
 aurora_fonts = { version = "0.1" }
-aurora_iconify = { version = "0.3.0" }
+aurora_iconify = { version="0.4.0", features = ["lucide", "material-symbols"] }
 
 # Windows Specific
 winres = { version = "0.1.12" }
